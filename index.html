@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Portal Academia PM Barro Branco - GTA RP</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- ESTILO BÁSICO -->
+  <style>
+    * { box-sizing: border-box; font-family: Arial, sans-serif; }
+    body {
+      margin: 0;
+      background: #020617;
+      color: #e5e7eb;
+    }
+    header {
+      background: #020617;
+      border-bottom: 1px solid #111827;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    header h1 {
+      font-size: 16px;
+      margin: 0;
+    }
+    header nav a, header nav button {
+      color: #9ca3af;
+      text-decoration: none;
+      margin-left: 10px;
+      font-size: 13px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+    header nav a:hover, header nav button:hover {
+      color: #ffffff;
+    }
+    main {
+      max-width: 980px;
+      margin: 16px auto 32px;
+      padding: 0 12px;
+    }
+    .card {
+      background: #020617;
+      border: 1px solid #1f2937;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 0 20px rgba(0,0,0,.4);
+    }
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      background: #2563eb;
+      color: #e5e7eb;
+      margin-bottom: 6px;
+    }
+    .tag.green { background: #16a34a; }
+    .tag.red { background: #dc2626; }
+    h2, h3, h4 { margin-top: 0; }
+    ul { padding-left: 20px; }
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      margin: 4px 0 12px;
+      border-radius: 8px;
+      border: 1px solid #374151;
+      background: #020617;
+      color: #e5e7eb;
+      font-size: 14px;
+    }
+    textarea { min-height: 120px; }
+    button, .btn {
+      display: inline-block;
+      background: #2563eb;
+      color: #ffffff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      text-decoration: none;
+    }
+    button:hover, .btn:hover { background: #1d4ed8; }
+    small { color: #9ca3af; }
+    .list-item {
+      border-bottom: 1px solid #1f2937;
+      padding: 8px 0;
+      font-size: 14px;
+    }
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid #1f2937;
+      margin-bottom: 12px;
+      overflow-x: auto;
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      color: #9ca3af;
+      padding: 8px 12px;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    .tab-btn.active {
+      color: #ffffff;
+      border-bottom-color: #2563eb;
+    }
+    .hidden { display: none; }
+    .question {
+      margin-bottom: 12px;
+      border-bottom: 1px dashed #1f2937;
+      padding-bottom: 8px;
+    }
+    .question strong { display: block; margin-bottom: 4px; }
+    @media (max-width: 600px) {
+      header { flex-direction: column; align-items: flex-start; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Academia PM Barro Branco - GTA RP</h1>
+  <nav>
+    <a href="#" id="nav-home-link">Início</a>
+    <a href="#" id="nav-portal-link" class="hidden">Portal</a>
+    <button id="nav-logout-btn" class="hidden">Sair</button>
+  </nav>
+</header>
+
+<main>
+  <!-- VIEW PÚBLICA (LANDING) -->
+  <section id="view-public">
+    <div class="card">
+      <h2>Curso de Formação de Oficial - RP (3 semanas)</h2>
+      <p>Bem-vindo ao portal da Academia de Polícia Militar do Barro Branco no GTA RP. Aqui você irá:</p>
+      <ul>
+        <li>Realizar seu cadastro e login</li>
+        <li>Enviar trabalhos semanais</li>
+        <li>Fazer provas teóricas</li>
+        <li>Acompanhar seu desempenho</li>
+      </ul>
+      <p><a href="#" id="btn-ir-auth" class="btn">Acessar Portal do Aluno</a></p>
+    </div>
+
+    <div class="card">
+      <h3>Cronograma do Curso</h3>
+
+      <div class="card" style="margin-bottom:10px;">
+        <span class="tag">SEMANA 1</span>
+        <h4>Operações Policiais e Procedimentos Táticos</h4>
+        <ul>
+          <li>Abordagens intermediárias</li>
+          <li>Uso progressivo da força</li>
+          <li>Patrulhamento tático e preventivo</li>
+          <li>Procedimentos em ocorrências comuns</li>
+          <li>Introdução ao gerenciamento de crises</li>
+        </ul>
+      </div>
+
+      <div class="card" style="margin-bottom:10px;">
+        <span class="tag green">SEMANA 2</span>
+        <h4>Comando, Liderança e Administração Policial</h4>
+        <ul>
+          <li>Liderança no estilo PMESP</li>
+          <li>Rádios, códigos e comunicações avançadas</li>
+          <li>Ocorrências de alta complexidade</li>
+          <li>Documentação policial (BO/RO)</li>
+          <li>Ética, conduta e postura de oficial</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <span class="tag red">SEMANA 3</span>
+        <h4>Especialização e Avaliações Finais</h4>
+        <ul>
+          <li>Operações especiais (CQB, reféns, contra-ataque coordenado)</li>
+          <li>Simulações realistas de ocorrências</li>
+          <li>Relacionamento com outras forças (SAMU, PC, etc.)</li>
+          <li>Aspectos jurídicos adaptados ao RP</li>
+          <li>Prova teórica, prática e avaliação de liderança</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIEW AUTENTICAÇÃO -->
+  <section id="view-auth" class="hidden">
+    <div class="card">
+      <h2>Entrar</h2>
+      <label>Email</label>
+      <input id="login-email" type="email" placeholder="seu@email.com">
+      <label>Senha</label>
+      <input id="login-senha" type="password" placeholder="********">
+      <button id="btn-login">Entrar</button>
+      <p><small id="login-msg"></small></p>
+    </div>
+
+    <div class="card">
+      <h2>Cadastrar novo aluno</h2>
+      <label>Nome (RP)</label>
+      <input id="cad-nome" type="text" placeholder="Ex: Sd. Silva">
+      <label>Email</label>
+      <input id="cad-email" type="email">
+      <label>Senha</label>
+      <input id="cad-senha" type="password">
+      <button id="btn-cadastrar">Cadastrar</button>
+      <p><small id="cad-msg"></small></p>
+    </div>
+  </section>
+
+  <!-- VIEW PORTAL DO ALUNO -->
+  <section id="view-portal" class="hidden">
+    <div class="card">
+      <h2>Bem-vindo, <span id="aluno-nome">Carregando...</span></h2>
+      <p><small>Portal do curso de formação de oficial da PMESP adaptado ao GTA RP.</small></p>
+    </div>
+
+    <div class="card">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="tab-dashboard">Dashboard</button>
+        <button class="tab-btn" data-tab="tab-trabalhos">Trabalhos</button>
+        <button class="tab-btn" data-tab="tab-prova">Prova</button>
+      </div>
+
+      <!-- DASHBOARD -->
+      <div id="tab-dashboard">
+        <h3>Resumo</h3>
+        <p>Use as abas acima para enviar seus trabalhos semanais e realizar as provas.</p>
+
+        <div class="card">
+          <h4>Atalhos rápidos</h4>
+          <p><a href="#" class="btn" id="btn-atalho-trabalho">Enviar trabalho da semana</a></p>
+          <p><a href="#" class="btn" id="btn-atalho-prova">Realizar prova teórica</a></p>
+        </div>
+
+        <div class="card">
+          <h4>Últimos trabalhos enviados</h4>
+          <div id="lista-trabalhos-dashboard">
+            <small>Carregando...</small>
+          </div>
+        </div>
+
+        <div class="card">
+          <h4>Provas realizadas</h4>
+          <div id="lista-provas-dashboard">
+            <small>Carregando...</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB TRABALHOS -->
+      <div id="tab-trabalhos" class="hidden">
+        <h3>Envio de Trabalhos</h3>
+        <p><small>Escreva um texto sobre o que aprendeu em cada semana (mín. recomendado: 10 linhas).</small></p>
+
+        <div class="card">
+          <label>Semana</label>
+          <select id="trabalho-semana">
+            <option value="1">Semana 1 - Operações e Procedimentos</option>
+            <option value="2">Semana 2 - Comando e Liderança</option>
+            <option value="3">Semana 3 - Especialização e Avaliações</option>
+          </select>
+
+          <label>Título do trabalho</label>
+          <input id="trabalho-titulo" placeholder="Ex: Relato de patrulhamento em zona quente">
+
+          <label>Texto do trabalho</label>
+          <textarea id="trabalho-texto" placeholder="Descreva as situações e aprendizados em RP..."></textarea>
+
+          <button id="btn-enviar-trabalho">Enviar trabalho</button>
+          <p><small id="trabalho-msg"></small></p>
+        </div>
+
+        <div class="card">
+          <h4>Meus trabalhos enviados</h4>
+          <div id="lista-trabalhos"></div>
+        </div>
+      </div>
+
+      <!-- TAB PROVA -->
+      <div id="tab-prova" class="hidden">
+        <h3>Prova Teórica 1 - Procedimentos e Liderança</h3>
+        <p><small>As questões abaixo são baseadas na doutrina de abordagem, uso da força e liderança policial no RP.</small></p>
+
+        <form id="form-prova">
+          <div class="question">
+            <strong>1) Em uma abordagem de fundada suspeita, o primeiro passo correto é:</strong>
+            <label><input type="radio" name="q1" value="a"> Sacar a arma e apontar para o indivíduo.</label><br>
+            <label><input type="radio" name="q1" value="b"> Anunciar-se como policial, manter distância segura e dar comandos verbais claros.</label><br>
+            <label><input type="radio" name="q1" value="c"> Revistar imediatamente sem diálogo.</label>
+          </div>
+
+          <div class="question">
+            <strong>2) De acordo com o uso progressivo da força, a sequência correta é:</strong>
+            <label><input type="radio" name="q2" value="a"> Força física → arma de fogo → diálogo.</label><br>
+            <label><input type="radio" name="q2" value="b"> Presença → verbalização → meios não letais → força letal (em último caso).</label><br>
+            <label><input type="radio" name="q2" value="c"> Arma de fogo sempre que houver qualquer risco.</label>
+          </div>
+
+          <div class="question">
+            <strong>3) Durante perseguição veicular em zona urbana, o comandante da equipe deve:</strong>
+            <label><input type="radio" name="q3" value="a"> Falar o tempo todo no rádio, mesmo sem informações relevantes.</label><br>
+            <label><input type="radio" name="q3" value="b"> Manter comunicações objetivas, informando direção, velocidade e riscos, coordenando as demais viaturas.</label><br>
+            <label><input type="radio" name="q3" value="c"> Desligar o rádio para se concentrar apenas na direção.</label>
+          </div>
+
+          <div class="question">
+            <strong>4) Sobre liderança de oficial no RP, assinale a mais adequada:</strong>
+            <label><input type="radio" name="q4" value="a"> Liderar pelo medo, punindo sempre em público.</label><br>
+            <label><input type="radio" name="q4" value="b"> Liderar pelo exemplo, mantendo disciplina e respeito à hierarquia.</label><br>
+            <label><input type="radio" name="q4" value="c"> Ignorar erros dos subordinados para ser “gente boa”.</label>
+          </div>
+
+          <div class="question">
+            <strong>5) Em uma ocorrência com grande aglomeração (tumulto), o oficial deve priorizar:</strong>
+            <label><input type="radio" name="q5" value="a"> Entrar sozinho no meio da multidão.</label><br>
+            <label><input type="radio" name="q5" value="b"> Avaliar riscos, pedir apoio, estabelecer perímetro e dar ordens claras para dispersão.</label><br>
+            <label><input type="radio" name="q5" value="c"> Usar munição letal para dispersar mais rápido.</label>
+          </div>
+
+          <div class="question">
+            <strong>6) (Discursiva) Explique, em poucas linhas, como um oficial deve se portar em relação à hierarquia e disciplina dentro da corporação no RP.</strong>
+            <textarea name="q6" placeholder="Responda aqui..."></textarea>
+          </div>
+
+          <button type="submit" id="btn-enviar-prova">Enviar prova</button>
+          <p><small id="prova-msg"></small></p>
+        </form>
+
+        <div class="card">
+          <h4>Minhas provas</h4>
+          <div id="lista-provas"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- SCRIPT PRINCIPAL (SUPABASE + LÓGICA DO PORTAL) -->
+<script type="module">
+  /**
+   * ANTES DE USAR:
+   * 1) Crie um projeto no Supabase
+   * 2) Em SQL Editor, crie as tabelas:
+   *
+   * create table if not exists profiles (
+   *   id uuid primary key references auth.users(id) on delete cascade,
+   *   nome text,
+   *   is_admin boolean default false
+   * );
+   *
+   * create table if not exists trabalhos (
+   *   id bigserial primary key,
+   *   user_id uuid references auth.users(id) on delete cascade,
+   *   semana int,
+   *   titulo text,
+   *   texto text,
+   *   created_at timestamptz default now()
+   * );
+   *
+   * create table if not exists provas (
+   *   id bigserial primary key,
+   *   user_id uuid references auth.users(id) on delete cascade,
+   *   prova_codigo text,
+   *   respostas jsonb,
+   *   nota numeric,
+   *   created_at timestamptz default now()
+   * );
+   */
+
+  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+  // >>>>> EDITE AQUI COM OS DADOS DO SEU PROJETO SUPABASE <<<<<
+const SUPABASE_URL = "https://ilonwkgtdszmpcjwlezc.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlsb253a2d0ZHN6bXBjandsZXpjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk5NzQxMDIsImV4cCI6MjA3NTU1MDEwMn0.Cc-BtnHlXaGVCY6T6iXe0QA1tsfc17aX8lswEICvtw0";
+
+  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  // --- ELEMENTOS DE TELA ---
+  const viewPublic     = document.getElementById("view-public");
+  const viewAuth       = document.getElementById("view-auth");
+  const viewPortal     = document.getElementById("view-portal");
+
+  const navHomeLink    = document.getElementById("nav-home-link");
+  const navPortalLink  = document.getElementById("nav-portal-link");
+  const navLogoutBtn   = document.getElementById("nav-logout-btn");
+  const btnIrAuth      = document.getElementById("btn-ir-auth");
+
+  const loginEmail     = document.getElementById("login-email");
+  const loginSenha     = document.getElementById("login-senha");
+  const loginMsg       = document.getElementById("login-msg");
+  const btnLogin       = document.getElementById("btn-login");
+
+  const cadNome        = document.getElementById("cad-nome");
+  const cadEmail       = document.getElementById("cad-email");
+  const cadSenha       = document.getElementById("cad-senha");
+  const cadMsg         = document.getElementById("cad-msg");
+  const btnCadastrar   = document.getElementById("btn-cadastrar");
+
+  const alunoNomeSpan  = document.getElementById("aluno-nome");
+
+  const tabButtons     = document.querySelectorAll(".tab-btn");
+  const tabDashboard   = document.getElementById("tab-dashboard");
+  const tabTrabalhos   = document.getElementById("tab-trabalhos");
+  const tabProva       = document.getElementById("tab-prova");
+
+  const btnAtalhoTrabalho = document.getElementById("btn-atalho-trabalho");
+  const btnAtalhoProva     = document.getElementById("btn-atalho-prova");
+
+  // Trabalhos
+  const trabSemanaSel  = document.getElementById("trabalho-semana");
+  const trabTituloInp  = document.getElementById("trabalho-titulo");
+  const trabTextoInp   = document.getElementById("trabalho-texto");
+  const trabMsg        = document.getElementById("trabalho-msg");
+  const btnEnviarTrab  = document.getElementById("btn-enviar-trabalho");
+  const listaTrabalhos = document.getElementById("lista-trabalhos");
+  const listaTrabalhosDash = document.getElementById("lista-trabalhos-dashboard");
+
+  // Provas
+  const formProva          = document.getElementById("form-prova");
+  const provaMsg           = document.getElementById("prova-msg");
+  const listaProvas        = document.getElementById("lista-provas");
+  const listaProvasDash    = document.getElementById("lista-provas-dashboard");
+
+  let currentUser = null;
+
+  // Navegação simples
+  navHomeLink.addEventListener("click", ev => {
+    ev.preventDefault();
+    mostrarViewPublicOuPortal();
+  });
+
+  btnIrAuth.addEventListener("click", ev => {
+    ev.preventDefault();
+    mostrarAuth();
+  });
+
+  navPortalLink.addEventListener("click", ev => {
+    ev.preventDefault();
+    mostrarPortal();
+  });
+
+  navLogoutBtn.addEventListener("click", async () => {
+    await supabase.auth.signOut();
+    currentUser = null;
+    mostrarPublic();
+  });
+
+  function mostrarPublic() {
+    viewPublic.classList.remove("hidden");
+    viewAuth.classList.add("hidden");
+    viewPortal.classList.add("hidden");
+    navPortalLink.classList.add("hidden");
+    navLogoutBtn.classList.add("hidden");
+  }
+
+  function mostrarAuth() {
+    viewPublic.classList.add("hidden");
+    viewAuth.classList.remove("hidden");
+    viewPortal.classList.add("hidden");
+    navPortalLink.classList.add("hidden");
+    navLogoutBtn.classList.add("hidden");
+  }
+
+  function mostrarPortal() {
+    viewPublic.classList.add("hidden");
+    viewAuth.classList.add("hidden");
+    viewPortal.classList.remove("hidden");
+    navPortalLink.classList.remove("hidden");
+    navLogoutBtn.classList.remove("hidden");
+  }
+
+  async function mostrarViewPublicOuPortal() {
+    const { data, error } = await supabase.auth.getUser();
+    if (data.user) {
+      currentUser = data.user;
+      await carregarPortal();
+      mostrarPortal();
+    } else {
+      mostrarPublic();
+    }
+  }
+
+  // Login
+  btnLogin.addEventListener("click", async () => {
+    loginMsg.textContent = "Entrando...";
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: loginEmail.value,
+      password: loginSenha.value
+    });
+    if (error) {
+      loginMsg.textContent = "Erro: " + error.message;
+      return;
+    }
+    loginMsg.textContent = "Login realizado!";
+    currentUser = data.user;
+    await carregarPortal();
+    mostrarPortal();
+  });
+
+  // Cadastro
+  btnCadastrar.addEventListener("click", async () => {
+    cadMsg.textContent = "Cadastrando...";
+    const { data, error } = await supabase.auth.signUp({
+      email: cadEmail.value,
+      password: cadSenha.value
+    });
+    if (error) {
+      cadMsg.textContent = "Erro: " + error.message;
+      return;
+    }
+    if (data.user) {
+      await supabase.from("profiles").insert({
+        id: data.user.id,
+        nome: cadNome.value,
+        is_admin: false
+      });
+    }
+    cadMsg.textContent = "Cadastro realizado! Agora faça login.";
+  });
+
+  // Tabs
+  tabButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      tabButtons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      const tab = btn.dataset.tab;
+      tabDashboard.classList.add("hidden");
+      tabTrabalhos.classList.add("hidden");
+      tabProva.classList.add("hidden");
+      document.getElementById(tab).classList.remove("hidden");
+    });
+  });
+
+  btnAtalhoTrabalho.addEventListener("click", ev => {
+    ev.preventDefault();
+    ativarTab("tab-trabalhos");
+  });
+
+  btnAtalhoProva.addEventListener("click", ev => {
+    ev.preventDefault();
+    ativarTab("tab-prova");
+  });
+
+  function ativarTab(tabId) {
+    tabButtons.forEach(b => {
+      b.classList.toggle("active", b.dataset.tab === tabId);
+    });
+    tabDashboard.classList.toggle("hidden", tabId !== "tab-dashboard");
+    tabTrabalhos.classList.toggle("hidden", tabId !== "tab-trabalhos");
+    tabProva.classList.toggle("hidden", tabId !== "tab-prova");
+  }
+
+  // Carregar dados do portal
+  async function carregarPortal() {
+    if (!currentUser) {
+      const { data } = await supabase.auth.getUser();
+      currentUser = data.user;
+      if (!currentUser) {
+        mostrarAuth();
+        return;
+      }
+    }
+
+    // Nome do aluno
+    const { data: perfil } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", currentUser.id)
+      .maybeSingle();
+    alunoNomeSpan.textContent = perfil?.nome || currentUser.email;
+
+    await carregarTrabalhos();
+    await carregarProvas();
+  }
+
+  async function carregarTrabalhos() {
+    if (!currentUser) return;
+    const { data } = await supabase
+      .from("trabalhos")
+      .select("*")
+      .eq("user_id", currentUser.id)
+      .order("created_at", { ascending: false });
+
+    const destino1 = listaTrabalhos;
+    const destino2 = listaTrabalhosDash;
+
+    if (!data || data.length === 0) {
+      destino1.innerHTML = "<small>Nenhum trabalho enviado.</small>";
+      destino2.innerHTML = "<small>Nenhum trabalho enviado.</small>";
+      return;
+    }
+
+    const html = data.map(t => `
+      <div class="list-item">
+        <strong>Semana ${t.semana}</strong> - ${t.titulo}<br>
+        <small>Enviado em: ${new Date(t.created_at).toLocaleString()}</small>
+      </div>
+    `).join("");
+
+    destino1.innerHTML = html;
+    destino2.innerHTML = html;
+  }
+
+  async function carregarProvas() {
+    if (!currentUser) return;
+    const { data } = await supabase
+      .from("provas")
+      .select("*")
+      .eq("user_id", currentUser.id)
+      .order("created_at", { ascending: false });
+
+    const destino1 = listaProvas;
+    const destino2 = listaProvasDash;
+
+    if (!data || data.length === 0) {
+      destino1.innerHTML = "<small>Nenhuma prova realizada.</small>";
+      destino2.innerHTML = "<small>Nenhuma prova realizada.</small>";
+      return;
+    }
+
+    const html = data.map(p => `
+      <div class="list-item">
+        <strong>${p.prova_codigo}</strong><br>
+        <small>Data: ${new Date(p.created_at).toLocaleString()}</small><br>
+        <small>Nota: ${p.nota ?? "aguardando"}</small>
+      </div>
+    `).join("");
+
+    destino1.innerHTML = html;
+    destino2.innerHTML = html;
+  }
+
+  // Enviar trabalho
+  btnEnviarTrab.addEventListener("click", async () => {
+    if (!currentUser) {
+      trabMsg.textContent = "Faça login primeiro.";
+      return;
+    }
+    const semana = parseInt(trabSemanaSel.value, 10);
+    const titulo = trabTituloInp.value.trim();
+    const texto  = trabTextoInp.value.trim();
+
+    if (!titulo || !texto) {
+      trabMsg.textContent = "Preencha título e texto.";
+      return;
+    }
+
+    trabMsg.textContent = "Enviando...";
+    const { error } = await supabase.from("trabalhos").insert({
+      user_id: currentUser.id,
+      semana,
+      titulo,
+      texto
+    });
+
+    if (error) {
+      trabMsg.textContent = "Erro: " + error.message;
+      return;
+    }
+
+    trabMsg.textContent = "Trabalho enviado com sucesso!";
+    trabTituloInp.value = "";
+    trabTextoInp.value = "";
+    await carregarTrabalhos();
+  });
+
+  // Enviar prova
+  formProva.addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    if (!currentUser) {
+      provaMsg.textContent = "Faça login primeiro.";
+      return;
+    }
+
+    provaMsg.textContent = "Enviando prova...";
+
+    // Gabarito das questões objetivas
+    const gabarito = {
+      q1: "b",
+      q2: "b",
+      q3: "b",
+      q4: "b",
+      q5: "b"
+    };
+
+    const formData = new FormData(formProva);
+    const respostas = {};
+    for (let [key, value] of formData.entries()) {
+      respostas[key] = value;
+    }
+
+    let acertos = 0;
+    let totalObj = 0;
+    for (const q of Object.keys(gabarito)) {
+      totalObj++;
+      if (respostas[q] === gabarito[q]) acertos++;
+    }
+    const nota = (acertos / totalObj) * 10;
+
+    const payload = {
+      user_id: currentUser.id,
+      prova_codigo: "Prova 1 - Procedimentos e Liderança",
+      respostas,
+      nota
+    };
+
+    const { error } = await supabase.from("provas").insert(payload);
+    if (error) {
+      provaMsg.textContent = "Erro ao salvar prova: " + error.message;
+      return;
+    }
+
+    provaMsg.textContent = `Prova enviada! Nota objetiva: ${nota.toFixed(1)} (discursiva será avaliada manualmente).`;
+    await carregarProvas();
+  });
+
+  // Ao carregar a página, decidir o que mostrar
+  (async () => {
+    await mostrarViewPublicOuPortal();
+  })();
+</script>
+</body>
+</html>
