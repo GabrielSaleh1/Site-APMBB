@@ -503,6 +503,64 @@
       color: #fed7aa;
     }
 
+    /* DASHBOARD STATS */
+    .stats-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .stat-card {
+      flex: 1;
+      min-width: 120px;
+      border-radius: 14px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: radial-gradient(circle at top left, rgba(37, 99, 235, 0.18), rgba(15, 23, 42, 0.98));
+      padding: 8px 10px;
+    }
+    .stat-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+    .stat-value {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    /* TOAST */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      max-width: 260px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 13px;
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.8);
+      background: rgba(15, 23, 42, 0.98);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      color: var(--text-main);
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+      transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+      z-index: 50;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .toast-success {
+      border-color: rgba(34, 197, 94, 0.9);
+      color: #bbf7d0;
+    }
+    .toast-error {
+      border-color: rgba(248, 113, 113, 0.9);
+      color: #fecaca;
+    }
+
     /* RESPONSIVE */
     @media (max-width: 640px) {
       header {
@@ -522,6 +580,11 @@
       .tab-btn {
         flex: 1;
         justify-content: center;
+      }
+      .toast {
+        right: 12px;
+        left: 12px;
+        max-width: none;
       }
     }
   </style>
@@ -672,7 +735,7 @@
             <h2 class="card-title">Cadastrar novo aluno</h2>
             <p class="card-subtitle">Crie seu acesso individual ao portal da Academia.</p>
           </div>
-        <span class="tag green">Cadastro</span>
+          <span class="tag green">Cadastro</span>
         </div>
 
         <label>Nome (RP)</label>
@@ -714,7 +777,21 @@
             <div class="card" style="margin-bottom:14px;">
               <h3>Visão geral</h3>
               <p>Use as abas para enviar seus trabalhos semanais, realizar provas e acompanhar suas notas.</p>
-              <ul>
+              <div id="dashboard-stats" class="stats-row">
+                <div class="stat-card">
+                  <div class="stat-label">Trabalhos enviados</div>
+                  <div class="stat-value" id="stat-trabalhos">0</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-label">Provas realizadas</div>
+                  <div class="stat-value" id="stat-provas">0</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-label">Última atividade</div>
+                  <div class="stat-value" style="font-size:13px;" id="stat-ultima">—</div>
+                </div>
+              </div>
+              <ul style="margin-top:10px;">
                 <li><strong>Trabalhos:</strong> reflexões escritas após as aulas.</li>
                 <li><strong>Provas:</strong> questões objetivas + discursivas.</li>
                 <li><strong>Histórico:</strong> tudo vinculado ao seu usuário Supabase.</li>
@@ -773,7 +850,7 @@
           <div>
             <h3>Meus trabalhos enviados</h3>
             <div class="card" style="margin-top:6px;">
-              <div id="lista-trabalhos"></div>
+              <div id="lista-trabalhos"><small>Carregando...</small></div>
             </div>
           </div>
         </div>
@@ -835,7 +912,7 @@
           <div>
             <h3>Minhas provas</h3>
             <div class="card" style="margin-top:6px;">
-              <div id="lista-provas"></div>
+              <div id="lista-provas"><small>Carregando...</small></div>
             </div>
           </div>
         </div>
@@ -870,6 +947,9 @@
     </div>
   </section>
 </main>
+
+<!-- TOAST -->
+<div id="toast" class="toast hidden"></div>
 
 <!-- SCRIPT PRINCIPAL (SUPABASE + LÓGICA DO PORTAL) -->
 <script type="module">
@@ -917,6 +997,11 @@
   const btnAtalhoTrabalho = document.getElementById("btn-atalho-trabalho");
   const btnAtalhoProva     = document.getElementById("btn-atalho-prova");
 
+  // Dashboard stats
+  const statTrabalhos = document.getElementById("stat-trabalhos");
+  const statProvas    = document.getElementById("stat-provas");
+  const statUltima    = document.getElementById("stat-ultima");
+
   // Trabalhos
   const trabSemanaSel  = document.getElementById("trabalho-semana");
   const trabTituloInp  = document.getElementById("trabalho-titulo");
@@ -936,8 +1021,25 @@
   const adminListaTrabalhos = document.getElementById("admin-lista-trabalhos");
   const adminListaProvas    = document.getElementById("admin-lista-provas");
 
+  // Toast
+  const toastEl = document.getElementById("toast");
+  let toastTimeout = null;
+
   let currentUser = null;
   let isAdmin = false;
+
+  function showToast(message, type = "info") {
+    toastEl.textContent = message;
+    toastEl.classList.remove("hidden", "toast-success", "toast-error");
+    if (type === "success") toastEl.classList.add("toast-success");
+    else if (type === "error") toastEl.classList.add("toast-error");
+    toastEl.classList.add("show");
+
+    if (toastTimeout) clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => {
+      toastEl.classList.remove("show");
+    }, 3500);
+  }
 
   // Navegação simples
   navHomeLink.addEventListener("click", ev => {
@@ -966,6 +1068,7 @@
     await supabase.auth.signOut();
     currentUser = null;
     isAdmin = false;
+    showToast("Sessão encerrada.", "success");
     mostrarPublic();
   });
 
@@ -1025,9 +1128,11 @@
     });
     if (error) {
       loginMsg.textContent = "Erro: " + error.message;
+      showToast("Falha no login: " + error.message, "error");
       return;
     }
     loginMsg.textContent = "Login realizado!";
+    showToast("Login realizado com sucesso.", "success");
     currentUser = data.user;
     await carregarPortal();
     mostrarPortal();
@@ -1042,6 +1147,7 @@
     });
     if (error) {
       cadMsg.textContent = "Erro: " + error.message;
+      showToast("Erro no cadastro: " + error.message, "error");
       return;
     }
     if (data.user) {
@@ -1052,6 +1158,7 @@
       });
     }
     cadMsg.textContent = "Cadastro realizado! Agora faça login.";
+    showToast("Cadastro realizado! Verifique seu email se necessário e faça login.", "success");
   });
 
   // Tabs
@@ -1101,7 +1208,7 @@
       }
     }
 
-    // Nome do aluno / admin
+    // Nome e flag admin
     const { data: perfil } = await supabase
       .from("profiles")
       .select("*")
@@ -1120,25 +1227,36 @@
       tabBtnAdmin.classList.add("hidden");
     }
 
-    await carregarTrabalhos();
-    await carregarProvas();
+    const meusTrabs  = await carregarTrabalhos();
+    const minhasProvas = await carregarProvas();
+
+    // Atualizar stats
+    statTrabalhos.textContent = meusTrabs.length;
+    statProvas.textContent    = minhasProvas.length;
+
+    let ultimaData = null;
+    [...meusTrabs, ...minhasProvas].forEach(item => {
+      const d = new Date(item.created_at);
+      if (!ultimaData || d > ultimaData) ultimaData = d;
+    });
+    statUltima.textContent = ultimaData ? ultimaData.toLocaleString() : "—";
   }
 
   async function carregarTrabalhos() {
-    if (!currentUser) return;
+    if (!currentUser) return [];
+    listaTrabalhos.innerHTML = "<small>Carregando...</small>";
+    listaTrabalhosDash.innerHTML = "<small>Carregando...</small>";
+
     const { data } = await supabase
       .from("trabalhos")
       .select("*")
       .eq("user_id", currentUser.id)
       .order("created_at", { ascending: false });
 
-    const destino1 = listaTrabalhos;
-    const destino2 = listaTrabalhosDash;
-
     if (!data || data.length === 0) {
-      destino1.innerHTML = "<small>Nenhum trabalho enviado.</small>";
-      destino2.innerHTML = "<small>Nenhum trabalho enviado.</small>";
-      return;
+      listaTrabalhos.innerHTML = "<small>Nenhum trabalho enviado.</small>";
+      listaTrabalhosDash.innerHTML = "<small>Nenhum trabalho enviado.</small>";
+      return [];
     }
 
     const html = data.map(t => `
@@ -1148,43 +1266,46 @@
       </div>
     `).join("");
 
-    destino1.innerHTML = html;
-    destino2.innerHTML = html;
+    listaTrabalhos.innerHTML = html;
+    listaTrabalhosDash.innerHTML = html;
+    return data;
   }
 
   async function carregarProvas() {
-    if (!currentUser) return;
+    if (!currentUser) return [];
+    listaProvas.innerHTML = "<small>Carregando...</small>";
+    listaProvasDash.innerHTML = "<small>Carregando...</small>";
+
     const { data } = await supabase
       .from("provas")
       .select("*")
       .eq("user_id", currentUser.id)
       .order("created_at", { ascending: false });
 
-    const destino1 = listaProvas;
-    const destino2 = listaProvasDash;
-
     if (!data || data.length === 0) {
-      destino1.innerHTML = "<small>Nenhuma prova realizada.</small>";
-      destino2.innerHTML = "<small>Nenhuma prova realizada.</small>";
-      return;
+      listaProvas.innerHTML = "<small>Nenhuma prova realizada.</small>";
+      listaProvasDash.innerHTML = "<small>Nenhuma prova realizada.</small>";
+      return [];
     }
 
     const html = data.map(p => `
       <div class="list-item">
         <strong>${p.prova_codigo}</strong><br>
         <small>Data: ${new Date(p.created_at).toLocaleString()}</small><br>
-        <small>Nota: ${p.nota ?? "aguardando"}</small>
+        <small>Nota objetiva: ${p.nota ?? "aguardando"}</small>
       </div>
     `).join("");
 
-    destino1.innerHTML = html;
-    destino2.innerHTML = html;
+    listaProvas.innerHTML = html;
+    listaProvasDash.innerHTML = html;
+    return data;
   }
 
-  // Enviar trabalho
+  // Enviar trabalho (1 por semana)
   btnEnviarTrab.addEventListener("click", async () => {
     if (!currentUser) {
       trabMsg.textContent = "Faça login primeiro.";
+      showToast("Faça login para enviar trabalhos.", "error");
       return;
     }
     const semana = parseInt(trabSemanaSel.value, 10);
@@ -1193,6 +1314,21 @@
 
     if (!titulo || !texto) {
       trabMsg.textContent = "Preencha título e texto.";
+      showToast("Preencha título e texto do trabalho.", "error");
+      return;
+    }
+
+    // trava: apenas 1 trabalho por semana por aluno
+    const { data: existentes, error: erroCheck } = await supabase
+      .from("trabalhos")
+      .select("id")
+      .eq("user_id", currentUser.id)
+      .eq("semana", semana)
+      .limit(1);
+
+    if (!erroCheck && existentes && existentes.length > 0) {
+      trabMsg.textContent = "Você já enviou um trabalho para essa semana.";
+      showToast("Você já enviou um trabalho para essa semana.", "error");
       return;
     }
 
@@ -1206,21 +1342,42 @@
 
     if (error) {
       trabMsg.textContent = "Erro: " + error.message;
+      showToast("Erro ao enviar trabalho: " + error.message, "error");
       return;
     }
 
     trabMsg.textContent = "Trabalho enviado com sucesso!";
+    showToast("Trabalho enviado com sucesso!", "success");
     trabTituloInp.value = "";
     trabTextoInp.value = "";
-    await carregarTrabalhos();
-    if (isAdmin) await carregarAdminDados();
+    const meusTrabs = await carregarTrabalhos();
+
+    // atualizar stat
+    statTrabalhos.textContent = meusTrabs.length;
   });
 
-  // Enviar prova
+  // Enviar prova (1 vez só)
   formProva.addEventListener("submit", async (ev) => {
     ev.preventDefault();
     if (!currentUser) {
       provaMsg.textContent = "Faça login primeiro.";
+      showToast("Faça login para realizar a prova.", "error");
+      return;
+    }
+
+    const provaCodigo = "Prova 1 - Procedimentos e Liderança";
+
+    // trava: só pode fazer essa prova uma vez
+    const { data: jaFez, error: erroCheck } = await supabase
+      .from("provas")
+      .select("id")
+      .eq("user_id", currentUser.id)
+      .eq("prova_codigo", provaCodigo)
+      .limit(1);
+
+    if (!erroCheck && jaFez && jaFez.length > 0) {
+      provaMsg.textContent = "Você já realizou essa prova. Aguarde correção.";
+      showToast("Você já realizou essa prova.", "error");
       return;
     }
 
@@ -1250,7 +1407,7 @@
 
     const payload = {
       user_id: currentUser.id,
-      prova_codigo: "Prova 1 - Procedimentos e Liderança",
+      prova_codigo: provaCodigo,
       respostas,
       nota
     };
@@ -1258,17 +1415,24 @@
     const { error } = await supabase.from("provas").insert(payload);
     if (error) {
       provaMsg.textContent = "Erro ao salvar prova: " + error.message;
+      showToast("Erro ao salvar prova: " + error.message, "error");
       return;
     }
 
-    provaMsg.textContent = `Prova enviada! Nota objetiva: ${nota.toFixed(1)} (discursiva será avaliada manualmente).`;
-    await carregarProvas();
-    if (isAdmin) await carregarAdminDados();
+    const msgDetalhe = `Acertos: ${acertos}/${totalObj} | Nota objetiva: ${nota.toFixed(1)} (discursiva será avaliada manualmente).`;
+    provaMsg.textContent = "Prova enviada! " + msgDetalhe;
+    showToast("Prova enviada! " + msgDetalhe, "success");
+
+    const minhasProvas = await carregarProvas();
+    statProvas.textContent = minhasProvas.length;
   });
 
   // Carregar dados para o admin (todos os alunos)
   async function carregarAdminDados() {
     if (!isAdmin) return;
+
+    adminListaTrabalhos.innerHTML = "<small>Carregando...</small>";
+    adminListaProvas.innerHTML = "<small>Carregando...</small>";
 
     // Mapa de nomes por id
     const { data: perfis } = await supabase
