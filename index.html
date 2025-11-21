@@ -570,7 +570,7 @@
           <a href="#" id="btn-ir-auth" class="btn">
             Entrar no Portal do Aluno
           </a>
-          <button class="btn-ghost" type="button" onclick="window.scrollTo({ top: document.body.scrollHeight/2, behavior: 'smooth' })">
+          <button class="btn-ghost" type="button" id="btn-ver-estrutura">
             Ver estrutura do curso
           </button>
         </div>
@@ -587,26 +587,10 @@
           </div>
         </div>
       </div>
-
-      <div class="card">
-        <div class="card-header">
-          <div>
-            <h3 class="card-title">Acesso rápido</h3>
-            <p class="card-subtitle">Use seu email e senha para entrar no ambiente da Academia.</p>
-          </div>
-          <span class="tag">ACESSO</span>
-        </div>
-        <p style="font-size:13px;margin-bottom:10px;">Clique em <strong>Entrar no Portal do Aluno</strong> para fazer login ou cadastro e já começar a utilizar as funções do curso.</p>
-        <ul>
-          <li>Autenticação por email/senha</li>
-          <li>Dados salvos em nuvem (Supabase)</li>
-          <li>Acesso individual e histórico pessoal</li>
-        </ul>
-        <p><small>Somente alunos autenticados conseguem enviar trabalhos e provas.</small></p>
-      </div>
     </div>
 
-    <div class="card" style="margin-top: 18px;">
+    <!-- Cronograma oculto até clicar em "Ver estrutura do curso" -->
+    <div class="card hidden" style="margin-top: 18px;" id="cronograma-card">
       <div class="card-header">
         <div>
           <h3 class="card-title">Cronograma do Curso (3 semanas)</h3>
@@ -861,34 +845,6 @@
 
 <!-- SCRIPT PRINCIPAL (SUPABASE + LÓGICA DO PORTAL) -->
 <script type="module">
-  /**
-   * Tabelas esperadas no Supabase:
-   *
-   * create table if not exists profiles (
-   *   id uuid primary key references auth.users(id) on delete cascade,
-   *   nome text,
-   *   is_admin boolean default false
-   * );
-   *
-   * create table if not exists trabalhos (
-   *   id bigserial primary key,
-   *   user_id uuid references auth.users(id) on delete cascade,
-   *   semana int,
-   *   titulo text,
-   *   texto text,
-   *   created_at timestamptz default now()
-   * );
-   *
-   * create table if not exists provas (
-   *   id bigserial primary key,
-   *   user_id uuid references auth.users(id) on delete cascade,
-   *   prova_codigo text,
-   *   respostas jsonb,
-   *   nota numeric,
-   *   created_at timestamptz default now()
-   * );
-   */
-
   import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
   // SEU PROJETO SUPABASE
@@ -906,6 +862,8 @@
   const navPortalLink  = document.getElementById("nav-portal-link");
   const navLogoutBtn   = document.getElementById("nav-logout-btn");
   const btnIrAuth      = document.getElementById("btn-ir-auth");
+  const btnVerEstrutura = document.getElementById("btn-ver-estrutura");
+  const cronogramaCard  = document.getElementById("cronograma-card");
 
   const loginEmail     = document.getElementById("login-email");
   const loginSenha     = document.getElementById("login-senha");
@@ -965,6 +923,15 @@
     await supabase.auth.signOut();
     currentUser = null;
     mostrarPublic();
+  });
+
+  // Mostrar cronograma ao clicar
+  btnVerEstrutura.addEventListener("click", ev => {
+    ev.preventDefault();
+    if (cronogramaCard.classList.contains("hidden")) {
+      cronogramaCard.classList.remove("hidden");
+    }
+    cronogramaCard.scrollIntoView({ behavior: "smooth", block: "start" });
   });
 
   function mostrarPublic() {
@@ -1196,7 +1163,6 @@
 
     provaMsg.textContent = "Enviando prova...";
 
-    // Gabarito das questões objetivas
     const gabarito = {
       q1: "b",
       q2: "b",
