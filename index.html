@@ -5,227 +5,716 @@
   <title>Portal Academia PM Barro Branco - GTA RP</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- ESTILO BÁSICO -->
+  <!-- ESTILO MODERNO -->
   <style>
-    * { box-sizing: border-box; font-family: Arial, sans-serif; }
+    :root {
+      --bg: #020617;
+      --bg-elevated: rgba(15, 23, 42, 0.9);
+      --border-subtle: rgba(148, 163, 184, 0.18);
+      --accent: #2563eb;
+      --accent-soft: rgba(37, 99, 235, 0.18);
+      --accent-green: #22c55e;
+      --accent-red: #ef4444;
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --shadow-soft: 0 18px 60px rgba(15, 23, 42, 0.9);
+      --shadow-subtle: 0 10px 30px rgba(15, 23, 42, 0.6);
+      --transition-fast: 0.16s ease-out;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
     body {
       margin: 0;
-      background: #020617;
-      color: #e5e7eb;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(56, 189, 248, 0.11), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(139, 92, 246, 0.16), transparent 55%),
+        var(--bg);
+      color: var(--text-main);
     }
+
+    /* HEADER */
     header {
-      background: #020617;
-      border-bottom: 1px solid #111827;
-      padding: 12px 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 20;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(to bottom, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.75));
+      border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
-    header h1 {
+
+    header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    header-left span.logo-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, #60a5fa, #1d4ed8);
+      color: #eff6ff;
+      font-size: 17px;
+      font-weight: 700;
+      box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.7), 0 12px 25px rgba(37, 99, 235, 0.55);
+    }
+
+    header-left h1 {
       font-size: 16px;
       margin: 0;
+      letter-spacing: 0.03em;
     }
-    header nav a, header nav button {
-      color: #9ca3af;
-      text-decoration: none;
-      margin-left: 10px;
-      font-size: 13px;
-      background: none;
+
+    header-left small {
+      display: block;
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    nav a, nav button {
+      color: var(--text-muted);
+      background: transparent;
       border: none;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 13px;
       cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: background var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
     }
-    header nav a:hover, header nav button:hover {
-      color: #ffffff;
+
+    nav a:hover, nav button:hover {
+      background: rgba(15, 23, 42, 0.9);
+      color: #f9fafb;
+      transform: translateY(-1px);
     }
+
+    nav button {
+      border: 1px solid rgba(148, 163, 184, 0.4);
+    }
+
+    nav button.danger {
+      border-color: rgba(248, 113, 113, 0.65);
+      color: #fecaca;
+    }
+
+    nav button.danger:hover {
+      background: rgba(239, 68, 68, 0.13);
+      color: #fee2e2;
+    }
+
+    /* MAIN LAYOUT */
     main {
-      max-width: 980px;
-      margin: 16px auto 32px;
-      padding: 0 12px;
+      max-width: 1100px;
+      margin: 20px auto 40px;
+      padding: 0 16px;
     }
+
+    .layout-two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.4fr);
+      gap: 18px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 900px) {
+      .layout-two-col {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    /* CARDS */
     .card {
-      background: #020617;
-      border: 1px solid #1f2937;
-      border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 16px;
-      box-shadow: 0 0 20px rgba(0,0,0,.4);
+      background: var(--bg-elevated);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-subtle);
+      padding: 18px 18px 16px;
+      position: relative;
+      overflow: hidden;
     }
-    .tag {
-      display: inline-block;
-      padding: 2px 8px;
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
+      background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.16), transparent 55%);
+      transition: opacity var(--transition-fast);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      gap: 12px;
+    }
+
+    .card-title {
+      font-size: 18px;
+      margin: 0;
+    }
+
+    .card-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 9px;
       border-radius: 999px;
       font-size: 11px;
-      background: #2563eb;
-      color: #e5e7eb;
-      margin-bottom: 6px;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      color: var(--text-muted);
     }
-    .tag.green { background: #16a34a; }
-    .tag.red { background: #dc2626; }
-    h2, h3, h4 { margin-top: 0; }
-    ul { padding-left: 20px; }
-    input, select, textarea {
-      width: 100%;
-      padding: 8px;
-      margin: 4px 0 12px;
-      border-radius: 8px;
-      border: 1px solid #374151;
-      background: #020617;
-      color: #e5e7eb;
+
+    .chip-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.35);
+    }
+
+    .chip.secondary {
+      border-color: rgba(37, 99, 235, 0.45);
+      color: #bfdbfe;
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    /* TAGS */
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      background: rgba(37, 99, 235, 0.12);
+      color: #bfdbfe;
+      border: 1px solid rgba(37, 99, 235, 0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+    .tag.green {
+      background: rgba(22, 163, 74, 0.14);
+      color: #bbf7d0;
+      border-color: rgba(22, 163, 74, 0.6);
+    }
+    .tag.red {
+      background: rgba(239, 68, 68, 0.13);
+      color: #fecaca;
+      border-color: rgba(248, 113, 113, 0.65);
+    }
+
+    h2, h3, h4 {
+      margin-top: 0;
+    }
+
+    p {
+      margin-top: 4px;
       font-size: 14px;
+      line-height: 1.5;
     }
-    textarea { min-height: 120px; }
+
+    ul {
+      padding-left: 18px;
+      margin: 6px 0;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* BUTTONS / LINKS */
     button, .btn {
-      display: inline-block;
-      background: #2563eb;
-      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: linear-gradient(135deg, var(--accent), #1d4ed8);
+      color: #f9fafb;
       border: none;
-      padding: 8px 14px;
-      border-radius: 8px;
+      padding: 8px 15px;
+      border-radius: 999px;
       cursor: pointer;
       font-size: 14px;
       text-decoration: none;
-    }
-    button:hover, .btn:hover { background: #1d4ed8; }
-    small { color: #9ca3af; }
-    .list-item {
-      border-bottom: 1px solid #1f2937;
-      padding: 8px 0;
-      font-size: 14px;
-    }
-    .tabs {
-      display: flex;
-      border-bottom: 1px solid #1f2937;
-      margin-bottom: 12px;
-      overflow-x: auto;
-    }
-    .tab-btn {
-      background: none;
-      border: none;
-      color: #9ca3af;
-      padding: 8px 12px;
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-      font-size: 13px;
+      box-shadow: 0 12px 30px rgba(37, 99, 235, 0.45);
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), filter var(--transition-fast), background var(--transition-fast);
       white-space: nowrap;
     }
-    .tab-btn.active {
-      color: #ffffff;
-      border-bottom-color: #2563eb;
+
+    button:hover, .btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.04);
+      box-shadow: 0 18px 45px rgba(37, 99, 235, 0.65);
     }
+
+    button:active, .btn:active {
+      transform: translateY(0);
+      box-shadow: 0 10px 24px rgba(37, 99, 235, 0.45);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      color: var(--text-muted);
+      box-shadow: none;
+      padding-inline: 12px;
+    }
+
+    .btn-ghost:hover {
+      color: #e5e7eb;
+      background: rgba(15, 23, 42, 0.9);
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.6);
+    }
+
+    small {
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    /* INPUTS */
+    label {
+      display: block;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin: 4px 0 2px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 8px 10px;
+      margin-bottom: 10px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: rgba(15, 23, 42, 0.98);
+      color: var(--text-main);
+      font-size: 14px;
+      outline: none;
+      transition: border var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), transform var(--transition-fast);
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: rgba(96, 165, 250, 0.9);
+      box-shadow: 0 0 0 1px rgba(96, 165, 250, 0.7), 0 0 25px rgba(37, 99, 235, 0.35);
+      background: #020617;
+      transform: translateY(-0.5px);
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    /* TIMELINE / SEMANAS */
+    .weeks-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 900px) {
+      .weeks-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .week-card {
+      border-radius: var(--radius-md);
+      border: 1px dashed rgba(148, 163, 184, 0.3);
+      padding: 12px;
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.96));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .week-card::after {
+      content: "";
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      width: 90px;
+      height: 90px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.23), transparent 70%);
+      opacity: 0;
+      transition: opacity var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .week-card:hover::after {
+      opacity: 1;
+      transform: translate3d(-10px, 10px, 0);
+    }
+
+    .week-title {
+      font-size: 13px;
+      font-weight: 600;
+      margin: 4px 0 2px;
+    }
+
+    .week-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .week-tagline {
+      font-size: 11px;
+      color: #cbd5f5;
+      margin-top: 4px;
+    }
+
+    .list-item {
+      border-bottom: 1px dashed rgba(31, 41, 55, 0.9);
+      padding: 7px 0;
+      font-size: 13px;
+    }
+
+    .list-item:last-child {
+      border-bottom: none;
+    }
+
+    /* TABS */
+    .tabs {
+      display: inline-flex;
+      background: rgba(15, 23, 42, 0.95);
+      border-radius: 999px;
+      padding: 3px;
+      border: 1px solid rgba(31, 41, 55, 0.9);
+      margin-bottom: 14px;
+    }
+
+    .tab-btn {
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .tab-btn.active {
+      background: radial-gradient(circle at top left, var(--accent-soft), rgba(15, 23, 42, 0.95));
+      color: #eff6ff;
+      transform: translateY(-0.5px);
+    }
+
     .hidden { display: none; }
+
     .question {
       margin-bottom: 12px;
-      border-bottom: 1px dashed #1f2937;
-      padding-bottom: 8px;
+      padding: 10px 10px 9px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(31, 41, 55, 0.9);
+      background: rgba(15, 23, 42, 0.96);
     }
-    .question strong { display: block; margin-bottom: 4px; }
-    @media (max-width: 600px) {
-      header { flex-direction: column; align-items: flex-start; gap: 8px; }
+
+    .question strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .question label {
+      font-size: 13px;
+      display: block;
+      margin: 3px 0;
+      cursor: pointer;
+    }
+
+    .question input[type="radio"] {
+      width: auto;
+      margin-right: 6px;
+      cursor: pointer;
+    }
+
+    /* STATUS BARRA */
+    .status-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .status-pill {
+      font-size: 11px;
+      border-radius: 999px;
+      padding: 4px 9px;
+      background: rgba(15, 23, 42, 0.96);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+    }
+
+    .status-pill.warn {
+      border-color: rgba(251, 146, 60, 0.8);
+      color: #fed7aa;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 640px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+      nav {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+      }
+      .tabs {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .tab-btn {
+        flex: 1;
+        justify-content: center;
+      }
     }
   </style>
 </head>
 <body>
 <header>
-  <h1>Academia PM Barro Branco - GTA RP</h1>
+  <header-left>
+    <span class="logo-badge">BB</span>
+    <div>
+      <h1>Academia PM Barro Branco • GTA RP</h1>
+      <small>Portal de Formação de Oficiais</small>
+    </div>
+  </header-left>
   <nav>
     <a href="#" id="nav-home-link">Início</a>
-    <a href="#" id="nav-portal-link" class="hidden">Portal</a>
-    <button id="nav-logout-btn" class="hidden">Sair</button>
+    <a href="#" id="nav-portal-link" class="hidden">Portal do Aluno</a>
+    <button id="nav-logout-btn" class="danger hidden">Sair</button>
   </nav>
 </header>
 
 <main>
   <!-- VIEW PÚBLICA (LANDING) -->
   <section id="view-public">
-    <div class="card">
-      <h2>Curso de Formação de Oficial - RP (3 semanas)</h2>
-      <p>Bem-vindo ao portal da Academia de Polícia Militar do Barro Branco no GTA RP. Aqui você irá:</p>
-      <ul>
-        <li>Realizar seu cadastro e login</li>
-        <li>Enviar trabalhos semanais</li>
-        <li>Fazer provas teóricas</li>
-        <li>Acompanhar seu desempenho</li>
-      </ul>
-      <p><a href="#" id="btn-ir-auth" class="btn">Acessar Portal do Aluno</a></p>
-    </div>
+    <div class="layout-two-col">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">Curso de Formação de Oficial - RP</h2>
+            <p class="card-subtitle">Estruturado em 3 semanas intensas de operações, comando e especialização.</p>
+          </div>
+          <span class="chip">
+            <span class="chip-dot"></span>
+            Turma ativa
+          </span>
+        </div>
 
-    <div class="card">
-      <h3>Cronograma do Curso</h3>
-
-      <div class="card" style="margin-bottom:10px;">
-        <span class="tag">SEMANA 1</span>
-        <h4>Operações Policiais e Procedimentos Táticos</h4>
+        <p>Este portal concentra todo o fluxo da sua formação:</p>
         <ul>
-          <li>Abordagens intermediárias</li>
-          <li>Uso progressivo da força</li>
-          <li>Patrulhamento tático e preventivo</li>
-          <li>Procedimentos em ocorrências comuns</li>
-          <li>Introdução ao gerenciamento de crises</li>
+          <li>Cadastro e login seguro via Supabase</li>
+          <li>Envio de trabalhos semanais diretamente pelo navegador</li>
+          <li>Provas teóricas com correção automática parcial</li>
+          <li>Histórico de desempenho e registros de tudo que foi enviado</li>
         </ul>
-      </div>
 
-      <div class="card" style="margin-bottom:10px;">
-        <span class="tag green">SEMANA 2</span>
-        <h4>Comando, Liderança e Administração Policial</h4>
-        <ul>
-          <li>Liderança no estilo PMESP</li>
-          <li>Rádios, códigos e comunicações avançadas</li>
-          <li>Ocorrências de alta complexidade</li>
-          <li>Documentação policial (BO/RO)</li>
-          <li>Ética, conduta e postura de oficial</li>
-        </ul>
+        <div style="margin-top: 14px; display:flex; gap:10px; flex-wrap:wrap;">
+          <a href="#" id="btn-ir-auth" class="btn">
+            Entrar no Portal do Aluno
+          </a>
+          <button class="btn-ghost" type="button" onclick="window.scrollTo({ top: document.body.scrollHeight/2, behavior: 'smooth' })">
+            Ver estrutura do curso
+          </button>
+        </div>
+
+        <div class="status-row">
+          <div class="status-pill">
+            <span class="status-dot"></span> Aulas: 3x por semana
+          </div>
+          <div class="status-pill">
+            ⏱ Duração: 3 semanas
+          </div>
+          <div class="status-pill warn">
+            🎖 Foco: formação de oficiais, não apenas executores
+          </div>
+        </div>
       </div>
 
       <div class="card">
-        <span class="tag red">SEMANA 3</span>
-        <h4>Especialização e Avaliações Finais</h4>
+        <div class="card-header">
+          <div>
+            <h3 class="card-title">Acesso rápido</h3>
+            <p class="card-subtitle">Use seu email e senha para entrar no ambiente da Academia.</p>
+          </div>
+          <span class="tag">ACESSO</span>
+        </div>
+        <p style="font-size:13px;margin-bottom:10px;">Clique em <strong>Entrar no Portal do Aluno</strong> para fazer login ou cadastro e já começar a utilizar as funções do curso.</p>
         <ul>
-          <li>Operações especiais (CQB, reféns, contra-ataque coordenado)</li>
-          <li>Simulações realistas de ocorrências</li>
-          <li>Relacionamento com outras forças (SAMU, PC, etc.)</li>
-          <li>Aspectos jurídicos adaptados ao RP</li>
-          <li>Prova teórica, prática e avaliação de liderança</li>
+          <li>Autenticação por email/senha</li>
+          <li>Dados salvos em nuvem (Supabase)</li>
+          <li>Acesso individual e histórico pessoal</li>
         </ul>
+        <p><small>Somente alunos autenticados conseguem enviar trabalhos e provas.</small></p>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 18px;">
+      <div class="card-header">
+        <div>
+          <h3 class="card-title">Cronograma do Curso (3 semanas)</h3>
+          <p class="card-subtitle">Cada semana tem um foco claro, para evoluir do operacional ao comando.</p>
+        </div>
+        <span class="chip secondary">Carga horária intensiva</span>
+      </div>
+
+      <div class="weeks-grid">
+        <div class="week-card">
+          <span class="tag">Semana 1</span>
+          <div class="week-title">Operações Policiais e Procedimentos Táticos</div>
+          <div class="week-subtitle">Base sólida de atuação em rua e segurança de equipe.</div>
+          <ul>
+            <li>Abordagens intermediárias (pessoal, veicular, fundada suspeita)</li>
+            <li>Uso progressivo da força (presença → verbalização → meios não-letais → letal)</li>
+            <li>Patrulhamento tático e preventivo em zonas quentes</li>
+            <li>Procedimentos em ocorrências comuns (brigas, direção perigosa, drogas, furto/roubo, acidentes)</li>
+            <li>Introdução ao gerenciamento de crises e comunicação com especializadas</li>
+          </ul>
+          <div class="week-tagline">Objetivo: atuar com segurança, técnica e realismo nas ocorrências.</div>
+        </div>
+
+        <div class="week-card">
+          <span class="tag green">Semana 2</span>
+          <div class="week-title">Comando, Liderança e Administração Policial</div>
+          <div class="week-subtitle">Transformando operador em oficial líder.</div>
+          <ul>
+            <li>Liderança pelo exemplo, disciplina e tomada de decisão sob pressão</li>
+            <li>Rádios, códigos e comunicações avançadas em perseguições e operações</li>
+            <li>Coordenação de ocorrências complexas (perseguições, roubos a banco, grandes tiroteios)</li>
+            <li>Documentação policial (BO/RO, coleta de provas, erros que invalidam prisão em RP)</li>
+            <li>Ética, conduta e postura de oficial com subordinados, superiores e civis</li>
+          </ul>
+          <div class="week-tagline">Objetivo: pensar como oficial, não apenas executar ordens.</div>
+        </div>
+
+        <div class="week-card">
+          <span class="tag red">Semana 3</span>
+          <div class="week-title">Especialização e Avaliações Finais</div>
+          <div class="week-subtitle">Consolidação de tudo que foi aprendido.</div>
+          <ul>
+            <li>Operações especiais (CQB, entrada tática, reféns, contra-ataque coordenado)</li>
+            <li>Simulações realistas de ocorrências com liderança rotativa</li>
+            <li>Integração com outras forças do servidor (SAMU, PC, GCM, Exército)</li>
+            <li>Aspectos jurídicos (flagrante, fundada suspeita, legítima defesa, limites da PM)</li>
+            <li>Prova teórica, prática e avaliação de liderança</li>
+          </ul>
+          <div class="week-tagline">Objetivo: formar oficiais prontos para comandar com maestria.</div>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- VIEW AUTENTICAÇÃO -->
   <section id="view-auth" class="hidden">
-    <div class="card">
-      <h2>Entrar</h2>
-      <label>Email</label>
-      <input id="login-email" type="email" placeholder="seu@email.com">
-      <label>Senha</label>
-      <input id="login-senha" type="password" placeholder="********">
-      <button id="btn-login">Entrar</button>
-      <p><small id="login-msg"></small></p>
-    </div>
+    <div class="layout-two-col">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">Entrar no Portal</h2>
+            <p class="card-subtitle">Use seu email e senha cadastrados para acessar o curso.</p>
+          </div>
+          <span class="tag">LOGIN</span>
+        </div>
 
-    <div class="card">
-      <h2>Cadastrar novo aluno</h2>
-      <label>Nome (RP)</label>
-      <input id="cad-nome" type="text" placeholder="Ex: Sd. Silva">
-      <label>Email</label>
-      <input id="cad-email" type="email">
-      <label>Senha</label>
-      <input id="cad-senha" type="password">
-      <button id="btn-cadastrar">Cadastrar</button>
-      <p><small id="cad-msg"></small></p>
+        <label>Email</label>
+        <input id="login-email" type="email" placeholder="seu@email.com">
+        <label>Senha</label>
+        <input id="login-senha" type="password" placeholder="********">
+        <button id="btn-login">Entrar</button>
+        <p style="margin-top:8px;"><small id="login-msg"></small></p>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">Cadastrar novo aluno</h2>
+            <p class="card-subtitle">Crie seu acesso individual ao portal da Academia.</p>
+          </div>
+          <span class="tag green">Cadastro</span>
+        </div>
+
+        <label>Nome (RP)</label>
+        <input id="cad-nome" type="text" placeholder="Ex: Sd. Silva">
+        <label>Email</label>
+        <input id="cad-email" type="email" placeholder="voce@exemplo.com">
+        <label>Senha</label>
+        <input id="cad-senha" type="password" placeholder="mínimo 6 caracteres">
+        <button id="btn-cadastrar">Cadastrar</button>
+        <p style="margin-top:8px;"><small id="cad-msg"></small></p>
+      </div>
     </div>
   </section>
 
   <!-- VIEW PORTAL DO ALUNO -->
   <section id="view-portal" class="hidden">
     <div class="card">
-      <h2>Bem-vindo, <span id="aluno-nome">Carregando...</span></h2>
-      <p><small>Portal do curso de formação de oficial da PMESP adaptado ao GTA RP.</small></p>
-    </div>
+      <div class="card-header">
+        <div>
+          <h2 class="card-title">Painel do Aluno</h2>
+          <p class="card-subtitle">Controle seu percurso: trabalhos, provas e desempenho.</p>
+        </div>
+        <span class="chip secondary">
+          👤 <span id="aluno-nome">Carregando...</span>
+        </span>
+      </div>
 
-    <div class="card">
       <div class="tabs">
         <button class="tab-btn active" data-tab="tab-dashboard">Dashboard</button>
         <button class="tab-btn" data-tab="tab-trabalhos">Trabalhos</button>
@@ -234,114 +723,138 @@
 
       <!-- DASHBOARD -->
       <div id="tab-dashboard">
-        <h3>Resumo</h3>
-        <p>Use as abas acima para enviar seus trabalhos semanais e realizar as provas.</p>
-
-        <div class="card">
-          <h4>Atalhos rápidos</h4>
-          <p><a href="#" class="btn" id="btn-atalho-trabalho">Enviar trabalho da semana</a></p>
-          <p><a href="#" class="btn" id="btn-atalho-prova">Realizar prova teórica</a></p>
-        </div>
-
-        <div class="card">
-          <h4>Últimos trabalhos enviados</h4>
-          <div id="lista-trabalhos-dashboard">
-            <small>Carregando...</small>
+        <div class="layout-two-col">
+          <div>
+            <div class="card" style="margin-bottom:14px;">
+              <h3>Visão geral</h3>
+              <p>Use as abas para enviar seus trabalhos semanais, realizar provas e acompanhar suas notas.</p>
+              <ul>
+                <li><strong>Trabalhos:</strong> reflexões escritas após as aulas.</li>
+                <li><strong>Provas:</strong> questões objetivas + discursivas.</li>
+                <li><strong>Histórico:</strong> tudo vinculado ao seu usuário Supabase.</li>
+              </ul>
+              <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
+                <a href="#" class="btn" id="btn-atalho-trabalho">Enviar trabalho da semana</a>
+                <a href="#" class="btn-ghost" id="btn-atalho-prova">Fazer prova teórica</a>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div class="card">
-          <h4>Provas realizadas</h4>
-          <div id="lista-provas-dashboard">
-            <small>Carregando...</small>
+          <div>
+            <div class="card" style="margin-bottom:12px;">
+              <h4>Últimos trabalhos enviados</h4>
+              <div id="lista-trabalhos-dashboard">
+                <small>Carregando...</small>
+              </div>
+            </div>
+
+            <div class="card">
+              <h4>Provas realizadas</h4>
+              <div id="lista-provas-dashboard">
+                <small>Carregando...</small>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- TAB TRABALHOS -->
       <div id="tab-trabalhos" class="hidden">
-        <h3>Envio de Trabalhos</h3>
-        <p><small>Escreva um texto sobre o que aprendeu em cada semana (mín. recomendado: 10 linhas).</small></p>
+        <div class="layout-two-col">
+          <div>
+            <h3>Envio de Trabalhos</h3>
+            <p><small>Escreva um texto sobre o que aprendeu em cada semana (mínimo recomendado: 10 linhas).</small></p>
 
-        <div class="card">
-          <label>Semana</label>
-          <select id="trabalho-semana">
-            <option value="1">Semana 1 - Operações e Procedimentos</option>
-            <option value="2">Semana 2 - Comando e Liderança</option>
-            <option value="3">Semana 3 - Especialização e Avaliações</option>
-          </select>
+            <div class="card" style="margin-top:6px;">
+              <label>Semana</label>
+              <select id="trabalho-semana">
+                <option value="1">Semana 1 - Operações e Procedimentos</option>
+                <option value="2">Semana 2 - Comando e Liderança</option>
+                <option value="3">Semana 3 - Especialização e Avaliações</option>
+              </select>
 
-          <label>Título do trabalho</label>
-          <input id="trabalho-titulo" placeholder="Ex: Relato de patrulhamento em zona quente">
+              <label>Título do trabalho</label>
+              <input id="trabalho-titulo" placeholder="Ex: Relato de patrulhamento em zona quente">
 
-          <label>Texto do trabalho</label>
-          <textarea id="trabalho-texto" placeholder="Descreva as situações e aprendizados em RP..."></textarea>
+              <label>Texto do trabalho</label>
+              <textarea id="trabalho-texto" placeholder="Descreva situações vividas em RP, decisões tomadas, erros, acertos e aprendizados."></textarea>
 
-          <button id="btn-enviar-trabalho">Enviar trabalho</button>
-          <p><small id="trabalho-msg"></small></p>
-        </div>
+              <button id="btn-enviar-trabalho">Enviar trabalho</button>
+              <p style="margin-top:8px;"><small id="trabalho-msg"></small></p>
+            </div>
+          </div>
 
-        <div class="card">
-          <h4>Meus trabalhos enviados</h4>
-          <div id="lista-trabalhos"></div>
+          <div>
+            <h3>Meus trabalhos enviados</h3>
+            <div class="card" style="margin-top:6px;">
+              <div id="lista-trabalhos"></div>
+            </div>
+          </div>
         </div>
       </div>
 
       <!-- TAB PROVA -->
       <div id="tab-prova" class="hidden">
-        <h3>Prova Teórica 1 - Procedimentos e Liderança</h3>
-        <p><small>As questões abaixo são baseadas na doutrina de abordagem, uso da força e liderança policial no RP.</small></p>
+        <div class="layout-two-col">
+          <div>
+            <h3>Prova Teórica 1 - Procedimentos e Liderança</h3>
+            <p><small>As questões abaixo são baseadas em abordagem, uso da força, perseguições e liderança no padrão PMESP adaptado ao RP.</small></p>
 
-        <form id="form-prova">
-          <div class="question">
-            <strong>1) Em uma abordagem de fundada suspeita, o primeiro passo correto é:</strong>
-            <label><input type="radio" name="q1" value="a"> Sacar a arma e apontar para o indivíduo.</label><br>
-            <label><input type="radio" name="q1" value="b"> Anunciar-se como policial, manter distância segura e dar comandos verbais claros.</label><br>
-            <label><input type="radio" name="q1" value="c"> Revistar imediatamente sem diálogo.</label>
+            <form id="form-prova" class="card" style="margin-top:6px;">
+              <div class="question">
+                <strong>1) Em uma abordagem de fundada suspeita, o primeiro passo correto é:</strong>
+                <label><input type="radio" name="q1" value="a"> Sacar a arma e apontar para o indivíduo.</label>
+                <label><input type="radio" name="q1" value="b"> Anunciar-se como policial, manter distância segura e dar comandos verbais claros.</label>
+                <label><input type="radio" name="q1" value="c"> Revistar imediatamente sem diálogo.</label>
+              </div>
+
+              <div class="question">
+                <strong>2) De acordo com o uso progressivo da força, a sequência correta é:</strong>
+                <label><input type="radio" name="q2" value="a"> Força física → arma de fogo → diálogo.</label>
+                <label><input type="radio" name="q2" value="b"> Presença → verbalização → meios não letais → força letal (em último caso).</label>
+                <label><input type="radio" name="q2" value="c"> Arma de fogo sempre que houver qualquer risco.</label>
+              </div>
+
+              <div class="question">
+                <strong>3) Durante perseguição veicular em zona urbana, o comandante da equipe deve:</strong>
+                <label><input type="radio" name="q3" value="a"> Falar o tempo todo no rádio, mesmo sem informações relevantes.</label>
+                <label><input type="radio" name="q3" value="b"> Manter comunicações objetivas, informando direção, velocidade, riscos e coordenando as demais viaturas.</label>
+                <label><input type="radio" name="q3" value="c"> Desligar o rádio para se concentrar apenas na direção.</label>
+              </div>
+
+              <div class="question">
+                <strong>4) Sobre liderança de oficial no RP, assinale a alternativa mais adequada:</strong>
+                <label><input type="radio" name="q4" value="a"> Liderar pelo medo, punindo sempre em público.</label>
+                <label><input type="radio" name="q4" value="b"> Liderar pelo exemplo, cobrando disciplina e respeitando a hierarquia.</label>
+                <label><input type="radio" name="q4" value="c"> Ignorar erros dos subordinados para ser “gente boa”.</label>
+              </div>
+
+              <div class="question">
+                <strong>5) Em uma ocorrência com grande aglomeração (tumulto), o oficial deve priorizar:</strong>
+                <label><input type="radio" name="q5" value="a"> Entrar sozinho no meio da multidão.</label>
+                <label><input type="radio" name="q5" value="b"> Avaliar riscos, pedir apoio, estabelecer perímetro e dar ordens claras para dispersão.</label>
+                <label><input type="radio" name="q5" value="c"> Usar munição letal para dispersar mais rápido.</label>
+              </div>
+
+              <div class="question">
+                <strong>6) (Discursiva) Explique, em poucas linhas, como um oficial deve se portar em relação à hierarquia e disciplina dentro da corporação no RP.</strong>
+                <textarea name="q6" placeholder="Fale sobre respeito à cadeia de comando, exemplo pessoal, cumprimento de ordens, diálogo com subordinados, etc."></textarea>
+              </div>
+
+              <button type="submit" id="btn-enviar-prova">Enviar prova</button>
+              <p style="margin-top:8px;"><small id="prova-msg"></small></p>
+            </form>
           </div>
 
-          <div class="question">
-            <strong>2) De acordo com o uso progressivo da força, a sequência correta é:</strong>
-            <label><input type="radio" name="q2" value="a"> Força física → arma de fogo → diálogo.</label><br>
-            <label><input type="radio" name="q2" value="b"> Presença → verbalização → meios não letais → força letal (em último caso).</label><br>
-            <label><input type="radio" name="q2" value="c"> Arma de fogo sempre que houver qualquer risco.</label>
+          <div>
+            <h3>Minhas provas</h3>
+            <div class="card" style="margin-top:6px;">
+              <div id="lista-provas"></div>
+            </div>
           </div>
-
-          <div class="question">
-            <strong>3) Durante perseguição veicular em zona urbana, o comandante da equipe deve:</strong>
-            <label><input type="radio" name="q3" value="a"> Falar o tempo todo no rádio, mesmo sem informações relevantes.</label><br>
-            <label><input type="radio" name="q3" value="b"> Manter comunicações objetivas, informando direção, velocidade e riscos, coordenando as demais viaturas.</label><br>
-            <label><input type="radio" name="q3" value="c"> Desligar o rádio para se concentrar apenas na direção.</label>
-          </div>
-
-          <div class="question">
-            <strong>4) Sobre liderança de oficial no RP, assinale a mais adequada:</strong>
-            <label><input type="radio" name="q4" value="a"> Liderar pelo medo, punindo sempre em público.</label><br>
-            <label><input type="radio" name="q4" value="b"> Liderar pelo exemplo, mantendo disciplina e respeito à hierarquia.</label><br>
-            <label><input type="radio" name="q4" value="c"> Ignorar erros dos subordinados para ser “gente boa”.</label>
-          </div>
-
-          <div class="question">
-            <strong>5) Em uma ocorrência com grande aglomeração (tumulto), o oficial deve priorizar:</strong>
-            <label><input type="radio" name="q5" value="a"> Entrar sozinho no meio da multidão.</label><br>
-            <label><input type="radio" name="q5" value="b"> Avaliar riscos, pedir apoio, estabelecer perímetro e dar ordens claras para dispersão.</label><br>
-            <label><input type="radio" name="q5" value="c"> Usar munição letal para dispersar mais rápido.</label>
-          </div>
-
-          <div class="question">
-            <strong>6) (Discursiva) Explique, em poucas linhas, como um oficial deve se portar em relação à hierarquia e disciplina dentro da corporação no RP.</strong>
-            <textarea name="q6" placeholder="Responda aqui..."></textarea>
-          </div>
-
-          <button type="submit" id="btn-enviar-prova">Enviar prova</button>
-          <p><small id="prova-msg"></small></p>
-        </form>
-
-        <div class="card">
-          <h4>Minhas provas</h4>
-          <div id="lista-provas"></div>
         </div>
       </div>
+
     </div>
   </section>
 </main>
@@ -349,9 +862,7 @@
 <!-- SCRIPT PRINCIPAL (SUPABASE + LÓGICA DO PORTAL) -->
 <script type="module">
   /**
-   * ANTES DE USAR:
-   * 1) Crie um projeto no Supabase
-   * 2) Em SQL Editor, crie as tabelas:
+   * Tabelas esperadas no Supabase:
    *
    * create table if not exists profiles (
    *   id uuid primary key references auth.users(id) on delete cascade,
@@ -380,13 +891,13 @@
 
   import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
-  // >>>>> EDITE AQUI COM OS DADOS DO SEU PROJETO SUPABASE <<<<<
-const SUPABASE_URL = "https://ilonwkgtdszmpcjwlezc.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlsb253a2d0ZHN6bXBjandsZXpjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk5NzQxMDIsImV4cCI6MjA3NTU1MDEwMn0.Cc-BtnHlXaGVCY6T6iXe0QA1tsfc17aX8lswEICvtw0";
+  // SEU PROJETO SUPABASE
+  const SUPABASE_URL = "https://ilonwkgtdszmpcjwlezc.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlsb253a2d0ZHN6bXBjandsZXpjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk5NzQxMDIsImV4cCI6MjA3NTU1MDEwMn0.Cc-BtnHlXaGVCY6T6iXe0QA1tsfc17aX8lswEICvtw0";
 
   const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  // --- ELEMENTOS DE TELA ---
+  // ELEMENTOS DE TELA
   const viewPublic     = document.getElementById("view-public");
   const viewAuth       = document.getElementById("view-auth");
   const viewPortal     = document.getElementById("view-portal");
@@ -481,7 +992,7 @@ const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
   }
 
   async function mostrarViewPublicOuPortal() {
-    const { data, error } = await supabase.auth.getUser();
+    const { data } = await supabase.auth.getUser();
     if (data.user) {
       currentUser = data.user;
       await carregarPortal();
@@ -603,7 +1114,7 @@ const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
     const html = data.map(t => `
       <div class="list-item">
-        <strong>Semana ${t.semana}</strong> - ${t.titulo}<br>
+        <strong>Semana ${t.semana}</strong> — ${t.titulo}<br>
         <small>Enviado em: ${new Date(t.created_at).toLocaleString()}</small>
       </div>
     `).join("");
