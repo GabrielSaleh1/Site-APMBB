@@ -444,33 +444,6 @@
 
     .hidden { display: none; }
 
-    .question {
-      margin-bottom: 12px;
-      padding: 10px 10px 9px;
-      border-radius: var(--radius-md);
-      border: 1px solid rgba(31, 41, 55, 0.9);
-      background: rgba(15, 23, 42, 0.96);
-    }
-
-    .question strong {
-      display: block;
-      font-size: 14px;
-      margin-bottom: 4px;
-    }
-
-    .question label {
-      font-size: 13px;
-      display: block;
-      margin: 3px 0;
-      cursor: pointer;
-    }
-
-    .question input[type="radio"] {
-      width: auto;
-      margin-right: 6px;
-      cursor: pointer;
-    }
-
     /* STATUS BARRA */
     .status-row {
       display: flex;
@@ -561,7 +534,10 @@
       color: #fecaca;
     }
 
-    /* RESPONSIVE */
+    details summary {
+      cursor: pointer;
+    }
+
     @media (max-width: 640px) {
       header {
         flex-direction: column;
@@ -634,9 +610,6 @@
           <a href="#" id="btn-ir-auth" class="btn">
             Entrar no Portal do Aluno
           </a>
-          <button class="btn-ghost" type="button" id="btn-ver-estrutura">
-            Ver estrutura do curso
-          </button>
         </div>
 
         <div class="status-row">
@@ -653,8 +626,8 @@
       </div>
     </div>
 
-    <!-- Cronograma oculto até clicar em "Ver estrutura do curso" -->
-    <div class="card hidden" style="margin-top: 18px;" id="cronograma-card">
+    <!-- Cronograma AGORA SEMPRE VISÍVEL -->
+    <div class="card" style="margin-top: 18px;" id="cronograma-card">
       <div class="card-header">
         <div>
           <h3 class="card-title">Cronograma do Curso (3 semanas)</h3>
@@ -709,14 +682,14 @@
     </div>
   </section>
 
-  <!-- VIEW AUTENTICAÇÃO -->
+  <!-- VIEW AUTENTICAÇÃO (SEM CADASTRO PÚBLICO) -->
   <section id="view-auth" class="hidden">
     <div class="layout-two-col">
       <div class="card">
         <div class="card-header">
           <div>
             <h2 class="card-title">Entrar no Portal</h2>
-            <p class="card-subtitle">Use seu email e senha cadastrados para acessar o curso.</p>
+            <p class="card-subtitle">Use seu email e senha fornecidos pela Academia.</p>
           </div>
           <span class="tag">LOGIN</span>
         </div>
@@ -730,22 +703,12 @@
       </div>
 
       <div class="card">
-        <div class="card-header">
-          <div>
-            <h2 class="card-title">Cadastrar novo aluno</h2>
-            <p class="card-subtitle">Crie seu acesso individual ao portal da Academia.</p>
-          </div>
-          <span class="tag green">Cadastro</span>
-        </div>
-
-        <label>Nome (RP)</label>
-        <input id="cad-nome" type="text" placeholder="Ex: Sd. Silva">
-        <label>Email</label>
-        <input id="cad-email" type="email" placeholder="voce@exemplo.com">
-        <label>Senha</label>
-        <input id="cad-senha" type="password" placeholder="mínimo 6 caracteres">
-        <button id="btn-cadastrar">Cadastrar</button>
-        <p style="margin-top:8px;"><small id="cad-msg"></small></p>
+        <h3>Acesso controlado</h3>
+        <p><small>O cadastro de novos alunos é feito exclusivamente pelos instrutores na Área Administrativa.</small></p>
+        <ul>
+          <li>Você deve receber email e senha oficiais da Academia.</li>
+          <li>Em caso de problema de acesso, procure um instrutor.</li>
+        </ul>
       </div>
     </div>
   </section>
@@ -856,54 +819,22 @@
         </div>
       </div>
 
-      <!-- TAB PROVA -->
+      <!-- TAB PROVA (GERADA VIA CONFIG) -->
       <div id="tab-prova" class="hidden">
         <div class="layout-two-col">
           <div>
-            <h3>Prova Teórica 1 - Procedimentos e Liderança</h3>
-            <p><small>As questões abaixo são baseadas em abordagem, uso da força, perseguições e liderança no padrão PMESP adaptado ao RP.</small></p>
+            <h3 id="prova-titulo">Prova Teórica</h3>
+            <p><small>Prova oficial da Academia, baseada em procedimentos, comando e liderança.</small></p>
+
+            <div id="prova-bloqueada-msg" class="card hidden" style="margin-top:6px;">
+              <strong>Prova bloqueada pelo instrutor.</strong>
+              <p><small>Aguarde a liberação para realizar esta avaliação.</small></p>
+            </div>
 
             <form id="form-prova" class="card" style="margin-top:6px;">
-              <div class="question">
-                <strong>1) Em uma abordagem de fundada suspeita, o primeiro passo correto é:</strong>
-                <label><input type="radio" name="q1" value="a"> Sacar a arma e apontar para o indivíduo.</label>
-                <label><input type="radio" name="q1" value="b"> Anunciar-se como policial, manter distância segura e dar comandos verbais claros.</label>
-                <label><input type="radio" name="q1" value="c"> Revistar imediatamente sem diálogo.</label>
+              <div id="prova-questoes">
+                <!-- questões montadas via JS -->
               </div>
-
-              <div class="question">
-                <strong>2) De acordo com o uso progressivo da força, a sequência correta é:</strong>
-                <label><input type="radio" name="q2" value="a"> Força física → arma de fogo → diálogo.</label>
-                <label><input type="radio" name="q2" value="b"> Presença → verbalização → meios não letais → força letal (em último caso).</label>
-                <label><input type="radio" name="q2" value="c"> Arma de fogo sempre que houver qualquer risco.</label>
-              </div>
-
-              <div class="question">
-                <strong>3) Durante perseguição veicular em zona urbana, o comandante da equipe deve:</strong>
-                <label><input type="radio" name="q3" value="a"> Falar o tempo todo no rádio, mesmo sem informações relevantes.</label>
-                <label><input type="radio" name="q3" value="b"> Manter comunicações objetivas, informando direção, velocidade, riscos e coordenando as demais viaturas.</label>
-                <label><input type="radio" name="q3" value="c"> Desligar o rádio para se concentrar apenas na direção.</label>
-              </div>
-
-              <div class="question">
-                <strong>4) Sobre liderança de oficial no RP, assinale a alternativa mais adequada:</strong>
-                <label><input type="radio" name="q4" value="a"> Liderar pelo medo, punindo sempre em público.</label>
-                <label><input type="radio" name="q4" value="b"> Liderar pelo exemplo, cobrando disciplina e respeitando a hierarquia.</label>
-                <label><input type="radio" name="q4" value="c"> Ignorar erros dos subordinados para ser “gente boa”.</label>
-              </div>
-
-              <div class="question">
-                <strong>5) Em uma ocorrência com grande aglomeração (tumulto), o oficial deve priorizar:</strong>
-                <label><input type="radio" name="q5" value="a"> Entrar sozinho no meio da multidão.</label>
-                <label><input type="radio" name="q5" value="b"> Avaliar riscos, pedir apoio, estabelecer perímetro e dar ordens claras para dispersão.</label>
-                <label><input type="radio" name="q5" value="c"> Usar munição letal para dispersar mais rápido.</label>
-              </div>
-
-              <div class="question">
-                <strong>6) (Discursiva) Explique, em poucas linhas, como um oficial deve se portar em relação à hierarquia e disciplina dentro da corporação no RP.</strong>
-                <textarea name="q6" placeholder="Fale sobre respeito à cadeia de comando, exemplo pessoal, cumprimento de ordens, diálogo com subordinados, etc."></textarea>
-              </div>
-
               <button type="submit" id="btn-enviar-prova">Enviar prova</button>
               <p style="margin-top:8px;"><small id="prova-msg"></small></p>
             </form>
@@ -923,13 +854,26 @@
         <div class="layout-two-col">
           <div>
             <h3>Área Administrativa</h3>
-            <p><small>Somente instrutores: visão geral de todos os trabalhos e provas enviados pelos alunos.</small></p>
+            <p><small>Somente instrutores: visão geral de todos os trabalhos, provas e controle de prova/cadastros.</small></p>
 
             <div class="card" style="margin-top:6px;">
               <h4>Trabalhos enviados (todos os alunos)</h4>
               <div id="admin-lista-trabalhos">
                 <small>Carregando...</small>
               </div>
+            </div>
+
+            <div class="card" style="margin-top:10px;">
+              <h4>Cadastrar novo aluno</h4>
+              <label>Nome (RP)</label>
+              <input id="admin-cad-nome" type="text" placeholder="Ex: Sd. Silva">
+              <label>Email</label>
+              <input id="admin-cad-email" type="email" placeholder="voce@exemplo.com">
+              <label>Senha</label>
+              <input id="admin-cad-senha" type="password" placeholder="mínimo 6 caracteres">
+              <button id="admin-btn-cadastrar">Cadastrar aluno</button>
+              <p style="margin-top:8px;"><small id="admin-cad-msg"></small></p>
+              <p><small><strong>Aviso:</strong> isso usa a mesma chave anon do Supabase. Em teoria alguém avançado poderia burlar no console, mas na prática já é bem mais controlado do que cadastro aberto.</small></p>
             </div>
           </div>
 
@@ -939,6 +883,19 @@
               <div id="admin-lista-provas">
                 <small>Carregando...</small>
               </div>
+            </div>
+
+            <div class="card" style="margin-top:10px;">
+              <h4>Configuração da Prova</h4>
+              <label>
+                <input type="checkbox" id="admin-prova-ativa" style="width:auto; margin-right:6px;">
+                Prova liberada para os alunos
+              </label>
+              <label>Modelo da prova (JSON) – apenas instrutores</label>
+              <textarea id="admin-prova-json" style="font-family: monospace; font-size:12px; min-height:220px;"></textarea>
+              <button id="admin-btn-salvar-prova" style="margin-top:4px;">Salvar configuração da prova</button>
+              <p style="margin-top:8px;"><small id="admin-prova-msg"></small></p>
+              <p><small>Dica: mantenha o formato, altere apenas os textos e a alternativa correta de cada questão.</small></p>
             </div>
           </div>
         </div>
@@ -961,6 +918,75 @@
 
   const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+  // CONFIG PADRÃO DA PROVA (EDITÁVEL PELO ADMIN)
+  const defaultProvaConfig = {
+    titulo: "Prova Teórica 1 - Procedimentos e Liderança",
+    questoes: [
+      {
+        id: "q1",
+        tipo: "objetiva",
+        enunciado: "Em uma abordagem de fundada suspeita, o primeiro passo correto é:",
+        alternativas: {
+          a: "Sacar a arma e apontar para o indivíduo.",
+          b: "Anunciar-se como policial, manter distância segura e dar comandos verbais claros.",
+          c: "Revistar imediatamente sem diálogo."
+        },
+        correta: "b"
+      },
+      {
+        id: "q2",
+        tipo: "objetiva",
+        enunciado: "De acordo com o uso progressivo da força, a sequência correta é:",
+        alternativas: {
+          a: "Força física → arma de fogo → diálogo.",
+          b: "Presença → verbalização → meios não letais → força letal (em último caso).",
+          c: "Arma de fogo sempre que houver qualquer risco."
+        },
+        correta: "b"
+      },
+      {
+        id: "q3",
+        tipo: "objetiva",
+        enunciado: "Durante perseguição veicular em zona urbana, o comandante da equipe deve:",
+        alternativas: {
+          a: "Falar o tempo todo no rádio, mesmo sem informações relevantes.",
+          b: "Manter comunicações objetivas, informando direção, velocidade, riscos e coordenando as demais viaturas.",
+          c: "Desligar o rádio para se concentrar apenas na direção."
+        },
+        correta: "b"
+      },
+      {
+        id: "q4",
+        tipo: "objetiva",
+        enunciado: "Sobre liderança de oficial no RP, assinale a alternativa mais adequada:",
+        alternativas: {
+          a: "Liderar pelo medo, punindo sempre em público.",
+          b: "Liderar pelo exemplo, cobrando disciplina e respeitando a hierarquia.",
+          c: "Ignorar erros dos subordinados para ser 'gente boa'."
+        },
+        correta: "b"
+      },
+      {
+        id: "q5",
+        tipo: "objetiva",
+        enunciado: "Em uma ocorrência com grande aglomeração (tumulto), o oficial deve priorizar:",
+        alternativas: {
+          a: "Entrar sozinho no meio da multidão.",
+          b: "Avaliar riscos, pedir apoio, estabelecer perímetro e dar ordens claras para dispersão.",
+          c: "Usar munição letal para dispersar mais rápido."
+        },
+        correta: "b"
+      },
+      {
+        id: "q6",
+        tipo: "discursiva",
+        enunciado: "Explique, em poucas linhas, como um oficial deve se portar em relação à hierarquia e disciplina dentro da corporação no RP."
+      }
+    ]
+  };
+
+  let provaConfig = { id: 1, ativa: false, config: defaultProvaConfig };
+
   // ELEMENTOS DE TELA
   const viewPublic     = document.getElementById("view-public");
   const viewAuth       = document.getElementById("view-auth");
@@ -971,19 +997,11 @@
   const navAdminLink   = document.getElementById("nav-admin-link");
   const navLogoutBtn   = document.getElementById("nav-logout-btn");
   const btnIrAuth      = document.getElementById("btn-ir-auth");
-  const btnVerEstrutura = document.getElementById("btn-ver-estrutura");
-  const cronogramaCard  = document.getElementById("cronograma-card");
 
   const loginEmail     = document.getElementById("login-email");
   const loginSenha     = document.getElementById("login-senha");
   const loginMsg       = document.getElementById("login-msg");
   const btnLogin       = document.getElementById("btn-login");
-
-  const cadNome        = document.getElementById("cad-nome");
-  const cadEmail       = document.getElementById("cad-email");
-  const cadSenha       = document.getElementById("cad-senha");
-  const cadMsg         = document.getElementById("cad-msg");
-  const btnCadastrar   = document.getElementById("btn-cadastrar");
 
   const alunoNomeSpan  = document.getElementById("aluno-nome");
 
@@ -1011,15 +1029,28 @@
   const listaTrabalhos = document.getElementById("lista-trabalhos");
   const listaTrabalhosDash = document.getElementById("lista-trabalhos-dashboard");
 
-  // Provas
-  const formProva          = document.getElementById("form-prova");
-  const provaMsg           = document.getElementById("prova-msg");
-  const listaProvas        = document.getElementById("lista-provas");
-  const listaProvasDash    = document.getElementById("lista-provas-dashboard");
+  // Provas (aluno)
+  const provaTituloEl       = document.getElementById("prova-titulo");
+  const provaBloqueadaMsgEl = document.getElementById("prova-bloqueada-msg");
+  const formProva           = document.getElementById("form-prova");
+  const provaQuestoesEl     = document.getElementById("prova-questoes");
+  const provaMsg            = document.getElementById("prova-msg");
+  const listaProvas         = document.getElementById("lista-provas");
+  const listaProvasDash     = document.getElementById("lista-provas-dashboard");
 
   // Admin
   const adminListaTrabalhos = document.getElementById("admin-lista-trabalhos");
   const adminListaProvas    = document.getElementById("admin-lista-provas");
+  const adminCadNome        = document.getElementById("admin-cad-nome");
+  const adminCadEmail       = document.getElementById("admin-cad-email");
+  const adminCadSenha       = document.getElementById("admin-cad-senha");
+  const adminCadMsg         = document.getElementById("admin-cad-msg");
+  const adminBtnCadastrar   = document.getElementById("admin-btn-cadastrar");
+
+  const adminProvaAtiva     = document.getElementById("admin-prova-ativa");
+  const adminProvaJson      = document.getElementById("admin-prova-json");
+  const adminProvaMsg       = document.getElementById("admin-prova-msg");
+  const adminBtnSalvarProva = document.getElementById("admin-btn-salvar-prova");
 
   // Toast
   const toastEl = document.getElementById("toast");
@@ -1070,15 +1101,6 @@
     isAdmin = false;
     showToast("Sessão encerrada.", "success");
     mostrarPublic();
-  });
-
-  // Mostrar cronograma ao clicar
-  btnVerEstrutura.addEventListener("click", ev => {
-    ev.preventDefault();
-    if (cronogramaCard.classList.contains("hidden")) {
-      cronogramaCard.classList.remove("hidden");
-    }
-    cronogramaCard.scrollIntoView({ behavior: "smooth", block: "start" });
   });
 
   function mostrarPublic() {
@@ -1136,29 +1158,6 @@
     currentUser = data.user;
     await carregarPortal();
     mostrarPortal();
-  });
-
-  // Cadastro
-  btnCadastrar.addEventListener("click", async () => {
-    cadMsg.textContent = "Cadastrando...";
-    const { data, error } = await supabase.auth.signUp({
-      email: cadEmail.value,
-      password: cadSenha.value
-    });
-    if (error) {
-      cadMsg.textContent = "Erro: " + error.message;
-      showToast("Erro no cadastro: " + error.message, "error");
-      return;
-    }
-    if (data.user) {
-      await supabase.from("profiles").insert({
-        id: data.user.id,
-        nome: cadNome.value,
-        is_admin: false
-      });
-    }
-    cadMsg.textContent = "Cadastro realizado! Agora faça login.";
-    showToast("Cadastro realizado! Verifique seu email se necessário e faça login.", "success");
   });
 
   // Tabs
@@ -1221,13 +1220,15 @@
     if (isAdmin) {
       navAdminLink.classList.remove("hidden");
       tabBtnAdmin.classList.remove("hidden");
-      await carregarAdminDados();
     } else {
       navAdminLink.classList.add("hidden");
       tabBtnAdmin.classList.add("hidden");
     }
 
-    const meusTrabs  = await carregarTrabalhos();
+    await carregarConfigProva();      // carrega configuração da prova do banco
+    montarProvaFormulario();          // monta a prova pra aluno/admin
+
+    const meusTrabs    = await carregarTrabalhos();
     const minhasProvas = await carregarProvas();
 
     // Atualizar stats
@@ -1240,8 +1241,87 @@
       if (!ultimaData || d > ultimaData) ultimaData = d;
     });
     statUltima.textContent = ultimaData ? ultimaData.toLocaleString() : "—";
+
+    if (isAdmin) {
+      await carregarAdminDados();
+      preencherAdminProvaForm();
+    }
   }
 
+  // Carregar config da prova do Supabase
+  async function carregarConfigProva() {
+    try {
+      const { data, error } = await supabase
+        .from("prova_config")
+        .select("id, ativa, config")
+        .eq("id", 1)
+        .maybeSingle();
+
+      if (error) {
+        console.log("Erro ao carregar prova_config:", error);
+        provaConfig = { id: 1, ativa: false, config: defaultProvaConfig };
+        return;
+      }
+
+      if (!data) {
+        // se não existir ainda, usamos default (não grava ainda)
+        provaConfig = { id: 1, ativa: false, config: defaultProvaConfig };
+      } else {
+        provaConfig = {
+          id: data.id,
+          ativa: data.ativa ?? false,
+          config: data.config || defaultProvaConfig
+        };
+      }
+    } catch (e) {
+      console.log("Erro genérico ao carregar config prova:", e);
+      provaConfig = { id: 1, ativa: false, config: defaultProvaConfig };
+    }
+  }
+
+  // Montar o formulário de prova baseado na config
+  function montarProvaFormulario() {
+    const cfg = provaConfig?.config || defaultProvaConfig;
+
+    provaTituloEl.textContent = cfg.titulo || "Prova Teórica";
+
+    if (!provaConfig.ativa && !isAdmin) {
+      // aluno vê bloqueio, form escondido
+      provaBloqueadaMsgEl.classList.remove("hidden");
+      formProva.classList.add("hidden");
+      return;
+    }
+
+    provaBloqueadaMsgEl.classList.add("hidden");
+    formProva.classList.remove("hidden");
+
+    // montar questões
+    provaQuestoesEl.innerHTML = "";
+    cfg.questoes.forEach((q, idx) => {
+      const num = idx + 1;
+      if (q.tipo === "objetiva") {
+        const div = document.createElement("div");
+        div.className = "question";
+        div.innerHTML = `
+          <strong>${num}) ${q.enunciado}</strong>
+          <label><input type="radio" name="${q.id}" value="a"> ${q.alternativas?.a || ""}</label>
+          <label><input type="radio" name="${q.id}" value="b"> ${q.alternativas?.b || ""}</label>
+          <label><input type="radio" name="${q.id}" value="c"> ${q.alternativas?.c || ""}</label>
+        `;
+        provaQuestoesEl.appendChild(div);
+      } else if (q.tipo === "discursiva") {
+        const div = document.createElement("div");
+        div.className = "question";
+        div.innerHTML = `
+          <strong>${num}) ${q.enunciado}</strong>
+          <textarea name="${q.id}" placeholder="Responda aqui."></textarea>
+        `;
+        provaQuestoesEl.appendChild(div);
+      }
+    });
+  }
+
+  // Trabalhos (aluno)
   async function carregarTrabalhos() {
     if (!currentUser) return [];
     listaTrabalhos.innerHTML = "<small>Carregando...</small>";
@@ -1271,6 +1351,7 @@
     return data;
   }
 
+  // Provas (aluno)
   async function carregarProvas() {
     if (!currentUser) return [];
     listaProvas.innerHTML = "<small>Carregando...</small>";
@@ -1351,12 +1432,10 @@
     trabTituloInp.value = "";
     trabTextoInp.value = "";
     const meusTrabs = await carregarTrabalhos();
-
-    // atualizar stat
     statTrabalhos.textContent = meusTrabs.length;
   });
 
-  // Enviar prova (1 vez só)
+  // Enviar prova (1 vez só por modelo)
   formProva.addEventListener("submit", async (ev) => {
     ev.preventDefault();
     if (!currentUser) {
@@ -1365,7 +1444,7 @@
       return;
     }
 
-    const provaCodigo = "Prova 1 - Procedimentos e Liderança";
+    const provaCodigo = provaConfig.config.titulo || "Prova";
 
     // trava: só pode fazer essa prova uma vez
     const { data: jaFez, error: erroCheck } = await supabase
@@ -1383,13 +1462,13 @@
 
     provaMsg.textContent = "Enviando prova...";
 
-    const gabarito = {
-      q1: "b",
-      q2: "b",
-      q3: "b",
-      q4: "b",
-      q5: "b"
-    };
+    const cfg = provaConfig.config || defaultProvaConfig;
+    const gabarito = {};
+    cfg.questoes.forEach(q => {
+      if (q.tipo === "objetiva" && q.correta) {
+        gabarito[q.id] = q.correta;
+      }
+    });
 
     const formData = new FormData(formProva);
     const respostas = {};
@@ -1399,11 +1478,11 @@
 
     let acertos = 0;
     let totalObj = 0;
-    for (const q of Object.keys(gabarito)) {
+    for (const qid of Object.keys(gabarito)) {
       totalObj++;
-      if (respostas[q] === gabarito[q]) acertos++;
+      if (respostas[qid] === gabarito[qid]) acertos++;
     }
-    const nota = (acertos / totalObj) * 10;
+    const nota = totalObj > 0 ? (acertos / totalObj) * 10 : null;
 
     const payload = {
       user_id: currentUser.id,
@@ -1419,12 +1498,113 @@
       return;
     }
 
-    const msgDetalhe = `Acertos: ${acertos}/${totalObj} | Nota objetiva: ${nota.toFixed(1)} (discursiva será avaliada manualmente).`;
+    const msgDetalhe = nota !== null
+      ? `Acertos: ${acertos}/${totalObj} | Nota objetiva: ${nota.toFixed(1)} (discursiva será avaliada manualmente).`
+      : "Prova enviada! (sem questões objetivas configuradas).";
+
     provaMsg.textContent = "Prova enviada! " + msgDetalhe;
     showToast("Prova enviada! " + msgDetalhe, "success");
 
     const minhasProvas = await carregarProvas();
     statProvas.textContent = minhasProvas.length;
+  });
+
+  // ADMIN: cadastrar novo aluno
+  adminBtnCadastrar.addEventListener("click", async () => {
+    if (!isAdmin) {
+      adminCadMsg.textContent = "Somente admin pode cadastrar.";
+      showToast("Acesso negado ao cadastro.", "error");
+      return;
+    }
+
+    const nome  = adminCadNome.value.trim();
+    const email = adminCadEmail.value.trim();
+    const senha = adminCadSenha.value.trim();
+
+    if (!nome || !email || !senha) {
+      adminCadMsg.textContent = "Preencha todos os campos.";
+      showToast("Preencha todos os campos para cadastrar.", "error");
+      return;
+    }
+
+    adminCadMsg.textContent = "Cadastrando aluno...";
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password: senha
+    });
+
+    if (error) {
+      adminCadMsg.textContent = "Erro: " + error.message;
+      showToast("Erro ao cadastrar aluno: " + error.message, "error");
+      return;
+    }
+
+    if (data.user) {
+      await supabase.from("profiles").insert({
+        id: data.user.id,
+        nome,
+        is_admin: false
+      });
+    }
+
+    adminCadMsg.textContent = "Aluno cadastrado com sucesso!";
+    showToast("Aluno cadastrado com sucesso!", "success");
+    adminCadNome.value = "";
+    adminCadEmail.value = "";
+    adminCadSenha.value = "";
+  });
+
+  // ADMIN: preencher form de config da prova
+  function preencherAdminProvaForm() {
+    if (!isAdmin) return;
+    adminProvaAtiva.checked = !!provaConfig.ativa;
+    adminProvaJson.value = JSON.stringify(provaConfig.config || defaultProvaConfig, null, 2);
+  }
+
+  // ADMIN: salvar config da prova
+  adminBtnSalvarProva.addEventListener("click", async () => {
+    if (!isAdmin) {
+      adminProvaMsg.textContent = "Somente admin pode alterar a prova.";
+      showToast("Somente admin pode alterar a prova.", "error");
+      return;
+    }
+
+    let novoConfig;
+    try {
+      novoConfig = JSON.parse(adminProvaJson.value);
+    } catch (e) {
+      adminProvaMsg.textContent = "JSON inválido. Verifique a sintaxe.";
+      showToast("JSON inválido. Verifique se não faltou vírgula, aspas, etc.", "error");
+      return;
+    }
+
+    const ativa = adminProvaAtiva.checked;
+
+    const { data, error } = await supabase
+      .from("prova_config")
+      .upsert({
+        id: 1,
+        ativa,
+        config: novoConfig
+      }, { onConflict: "id" })
+      .select()
+      .maybeSingle();
+
+    if (error) {
+      adminProvaMsg.textContent = "Erro ao salvar config: " + error.message;
+      showToast("Erro ao salvar config da prova: " + error.message, "error");
+      return;
+    }
+
+    provaConfig = {
+      id: data.id,
+      ativa: data.ativa,
+      config: data.config
+    };
+
+    adminProvaMsg.textContent = "Configuração salva.";
+    showToast("Configuração da prova salva com sucesso.", "success");
+    montarProvaFormulario();
   });
 
   // Carregar dados para o admin (todos os alunos)
@@ -1455,8 +1635,11 @@
     } else {
       adminListaTrabalhos.innerHTML = trabs.map(t => `
         <div class="list-item">
-          <strong>${nomesPorId[t.user_id] || t.user_id}</strong> — Semana ${t.semana} — ${t.titulo}<br>
-          <small>${new Date(t.created_at).toLocaleString()}</small>
+          <details>
+            <summary><strong>${nomesPorId[t.user_id] || t.user_id}</strong> — Semana ${t.semana} — ${t.titulo}</summary>
+            <small>${new Date(t.created_at).toLocaleString()}</small>
+            <p style="margin-top:4px;">${(t.texto || "").replace(/\n/g, "<br>")}</p>
+          </details>
         </div>
       `).join("");
     }
@@ -1470,13 +1653,22 @@
     if (!provas || provas.length === 0) {
       adminListaProvas.innerHTML = "<small>Nenhuma prova realizada.</small>";
     } else {
-      adminListaProvas.innerHTML = provas.map(p => `
-        <div class="list-item">
-          <strong>${nomesPorId[p.user_id] || p.user_id}</strong> — ${p.prova_codigo}<br>
-          <small>Data: ${new Date(p.created_at).toLocaleString()}</small><br>
-          <small>Nota objetiva: ${p.nota ?? "aguardando"}</small>
-        </div>
-      `).join("");
+      adminListaProvas.innerHTML = provas.map(p => {
+        const respostas = p.respostas || {};
+        const obj = [];
+        for (const [k, v] of Object.entries(respostas)) {
+          obj.push(`<li><strong>${k}:</strong> ${String(v).replace(/\n/g, "<br>")}</li>`);
+        }
+        return `
+          <div class="list-item">
+            <details>
+              <summary><strong>${nomesPorId[p.user_id] || p.user_id}</strong> — ${p.prova_codigo} (nota: ${p.nota ?? "aguardando"})</summary>
+              <small>Data: ${new Date(p.created_at).toLocaleString()}</small>
+              <ul style="margin-top:4px; padding-left:18px;">${obj.join("")}</ul>
+            </details>
+          </div>
+        `;
+      }).join("");
     }
   }
 
