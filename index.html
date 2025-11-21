@@ -5,7 +5,7 @@
   <title>Portal Academia PM Barro Branco - GTA RP</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- ESTILO MODERNO -->
+  <!-- ESTILO -->
   <style>
     :root {
       --bg: #020617;
@@ -19,7 +19,6 @@
       --text-muted: #9ca3af;
       --radius-lg: 18px;
       --radius-md: 12px;
-      --shadow-soft: 0 18px 60px rgba(15, 23, 42, 0.9);
       --shadow-subtle: 0 10px 30px rgba(15, 23, 42, 0.6);
       --transition-fast: 0.16s ease-out;
     }
@@ -137,7 +136,7 @@
 
     .layout-two-col {
       display: grid;
-      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.4fr);
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1.5fr);
       gap: 18px;
       align-items: flex-start;
     }
@@ -157,20 +156,6 @@
       padding: 18px 18px 16px;
       position: relative;
       overflow: hidden;
-    }
-
-    .card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      opacity: 0;
-      background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.16), transparent 55%);
-      transition: opacity var(--transition-fast);
-    }
-
-    .card:hover::before {
-      opacity: 1;
     }
 
     .card-header {
@@ -209,7 +194,6 @@
       height: 7px;
       border-radius: 999px;
       background: #22c55e;
-      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.35);
     }
 
     .chip.secondary {
@@ -218,7 +202,6 @@
       background: rgba(15, 23, 42, 0.9);
     }
 
-    /* TAGS */
     .tag {
       display: inline-flex;
       align-items: center;
@@ -232,11 +215,13 @@
       text-transform: uppercase;
       letter-spacing: 0.07em;
     }
+
     .tag.green {
       background: rgba(22, 163, 74, 0.14);
       color: #bbf7d0;
       border-color: rgba(22, 163, 74, 0.6);
     }
+
     .tag.red {
       background: rgba(239, 68, 68, 0.13);
       color: #fecaca;
@@ -260,7 +245,7 @@
       color: var(--text-muted);
     }
 
-    /* BUTTONS / LINKS */
+    /* BOTÕES */
     button, .btn {
       display: inline-flex;
       align-items: center;
@@ -275,7 +260,7 @@
       font-size: 14px;
       text-decoration: none;
       box-shadow: 0 12px 30px rgba(37, 99, 235, 0.45);
-      transition: transform var(--transition-fast), box-shadow var(--transition-fast), filter var(--transition-fast), background var(--transition-fast);
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), filter var(--transition-fast);
       white-space: nowrap;
     }
 
@@ -343,7 +328,7 @@
       resize: vertical;
     }
 
-    /* TIMELINE / SEMANAS */
+    /* SEMANAS */
     .weeks-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -358,30 +343,10 @@
     }
 
     .week-card {
-      border-radius: var(--radius-md);
+      border-radius: 14px;
       border: 1px dashed rgba(148, 163, 184, 0.3);
       padding: 12px;
       background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.96));
-      position: relative;
-      overflow: hidden;
-    }
-
-    .week-card::after {
-      content: "";
-      position: absolute;
-      top: -40px;
-      right: -40px;
-      width: 90px;
-      height: 90px;
-      border-radius: 999px;
-      background: radial-gradient(circle, rgba(59, 130, 246, 0.23), transparent 70%);
-      opacity: 0;
-      transition: opacity var(--transition-fast), transform var(--transition-fast);
-    }
-
-    .week-card:hover::after {
-      opacity: 1;
-      transform: translate3d(-10px, 10px, 0);
     }
 
     .week-title {
@@ -444,61 +409,8 @@
 
     .hidden { display: none; }
 
-    /* STATUS BARRA */
-    .status-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 8px;
-    }
-
-    .status-pill {
-      font-size: 11px;
-      border-radius: 999px;
-      padding: 4px 9px;
-      background: rgba(15, 23, 42, 0.96);
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      color: var(--text-muted);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .status-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: #22c55e;
-    }
-
-    .status-pill.warn {
-      border-color: rgba(251, 146, 60, 0.8);
-      color: #fed7aa;
-    }
-
-    /* DASHBOARD STATS */
-    .stats-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 8px;
-    }
-    .stat-card {
-      flex: 1;
-      min-width: 120px;
-      border-radius: 14px;
-      border: 1px solid rgba(55, 65, 81, 0.9);
-      background: radial-gradient(circle at top left, rgba(37, 99, 235, 0.18), rgba(15, 23, 42, 0.98));
-      padding: 8px 10px;
-    }
-    .stat-label {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-bottom: 2px;
-    }
-    .stat-value {
-      font-size: 18px;
-      font-weight: 600;
+    details summary {
+      cursor: pointer;
     }
 
     /* TOAST */
@@ -532,10 +444,6 @@
     .toast-error {
       border-color: rgba(248, 113, 113, 0.9);
       color: #fecaca;
-    }
-
-    details summary {
-      cursor: pointer;
     }
 
     @media (max-width: 640px) {
@@ -583,14 +491,14 @@
 </header>
 
 <main>
-  <!-- VIEW PÚBLICA (LANDING) -->
+  <!-- VIEW PÚBLICA -->
   <section id="view-public">
     <div class="layout-two-col">
       <div class="card">
         <div class="card-header">
           <div>
             <h2 class="card-title">Curso de Formação de Oficial - RP</h2>
-            <p class="card-subtitle">Estruturado em 3 semanas intensas de operações, comando e especialização.</p>
+            <p class="card-subtitle">3 semanas de formação focada em operações, comando e especialização.</p>
           </div>
           <span class="chip">
             <span class="chip-dot"></span>
@@ -598,12 +506,12 @@
           </span>
         </div>
 
-        <p>Este portal concentra todo o fluxo da sua formação:</p>
+        <p>Este portal é o centro da sua jornada na Academia:</p>
         <ul>
-          <li>Cadastro e login seguro via Supabase</li>
-          <li>Envio de trabalhos semanais diretamente pelo navegador</li>
-          <li>Provas teóricas com correção automática parcial</li>
-          <li>Histórico de desempenho e registros de tudo que foi enviado</li>
+          <li>Login individual por aluno</li>
+          <li>Envio de resumos/trabalhos semanais</li>
+          <li>Acompanhamento do que você já enviou</li>
+          <li>Área administrativa para os instrutores</li>
         </ul>
 
         <div style="margin-top: 14px; display:flex; gap:10px; flex-wrap:wrap;">
@@ -611,85 +519,73 @@
             Entrar no Portal do Aluno
           </a>
         </div>
-
-        <div class="status-row">
-          <div class="status-pill">
-            <span class="status-dot"></span> Aulas: 3x por semana
-          </div>
-          <div class="status-pill">
-            ⏱ Duração: 3 semanas
-          </div>
-          <div class="status-pill warn">
-            🎖 Foco: formação de oficiais, não apenas executores
-          </div>
-        </div>
       </div>
     </div>
 
-    <!-- Cronograma AGORA SEMPRE VISÍVEL -->
-    <div class="card" style="margin-top: 18px;" id="cronograma-card">
+    <!-- Cronograma sempre visível -->
+    <div class="card" style="margin-top: 18px;">
       <div class="card-header">
         <div>
           <h3 class="card-title">Cronograma do Curso (3 semanas)</h3>
-          <p class="card-subtitle">Cada semana tem um foco claro, para evoluir do operacional ao comando.</p>
+          <p class="card-subtitle">Do operacional ao comando, passo a passo.</p>
         </div>
-        <span class="chip secondary">Carga horária intensiva</span>
+        <span class="chip secondary">3 semanas • 3 aulas por semana</span>
       </div>
 
       <div class="weeks-grid">
         <div class="week-card">
           <span class="tag">Semana 1</span>
           <div class="week-title">Operações Policiais e Procedimentos Táticos</div>
-          <div class="week-subtitle">Base sólida de atuação em rua e segurança de equipe.</div>
+          <div class="week-subtitle">Base de rua e segurança de equipe.</div>
           <ul>
-            <li>Abordagens intermediárias (pessoal, veicular, fundada suspeita)</li>
-            <li>Uso progressivo da força (presença → verbalização → meios não-letais → letal)</li>
-            <li>Patrulhamento tático e preventivo em zonas quentes</li>
-            <li>Procedimentos em ocorrências comuns (brigas, direção perigosa, drogas, furto/roubo, acidentes)</li>
-            <li>Introdução ao gerenciamento de crises e comunicação com especializadas</li>
+            <li>Abordagens (pessoal, veicular, fundada suspeita)</li>
+            <li>Uso progressivo da força</li>
+            <li>Patrulhamento em zonas quentes</li>
+            <li>Ocorrências comuns (briga, trânsito, drogas, furto/roubo)</li>
+            <li>Introdução ao gerenciamento de crises</li>
           </ul>
-          <div class="week-tagline">Objetivo: atuar com segurança, técnica e realismo nas ocorrências.</div>
+          <div class="week-tagline">Foco: atuar com técnica e realismo.</div>
         </div>
 
         <div class="week-card">
           <span class="tag green">Semana 2</span>
-          <div class="week-title">Comando, Liderança e Administração Policial</div>
-          <div class="week-subtitle">Transformando operador em oficial líder.</div>
+          <div class="week-title">Comando, Liderança e Administração</div>
+          <div class="week-subtitle">Pensar como oficial, não só como executor.</div>
           <ul>
-            <li>Liderança pelo exemplo, disciplina e tomada de decisão sob pressão</li>
-            <li>Rádios, códigos e comunicações avançadas em perseguições e operações</li>
-            <li>Coordenação de ocorrências complexas (perseguições, roubos a banco, grandes tiroteios)</li>
-            <li>Documentação policial (BO/RO, coleta de provas, erros que invalidam prisão em RP)</li>
-            <li>Ética, conduta e postura de oficial com subordinados, superiores e civis</li>
+            <li>Liderança pelo exemplo e disciplina</li>
+            <li>Comunicações avançadas (rádio e códigos)</li>
+            <li>Coordenação de ocorrências complexas</li>
+            <li>Documentação policial (BO/RO, provas)</li>
+            <li>Ética, conduta e postura de oficial</li>
           </ul>
-          <div class="week-tagline">Objetivo: pensar como oficial, não apenas executar ordens.</div>
+          <div class="week-tagline">Foco: tomada de decisão e comando.</div>
         </div>
 
         <div class="week-card">
           <span class="tag red">Semana 3</span>
           <div class="week-title">Especialização e Avaliações Finais</div>
-          <div class="week-subtitle">Consolidação de tudo que foi aprendido.</div>
+          <div class="week-subtitle">Consolidação e testes finais.</div>
           <ul>
-            <li>Operações especiais (CQB, entrada tática, reféns, contra-ataque coordenado)</li>
-            <li>Simulações realistas de ocorrências com liderança rotativa</li>
-            <li>Integração com outras forças do servidor (SAMU, PC, GCM, Exército)</li>
-            <li>Aspectos jurídicos (flagrante, fundada suspeita, legítima defesa, limites da PM)</li>
-            <li>Prova teórica, prática e avaliação de liderança</li>
+            <li>Operações especiais (CQB, reféns, entradas táticas)</li>
+            <li>Simulações realistas com liderança rotativa</li>
+            <li>Integração com outras forças do servidor</li>
+            <li>Aspectos jurídicos no RP</li>
+            <li>Prova teórica + avaliação prática</li>
           </ul>
-          <div class="week-tagline">Objetivo: formar oficiais prontos para comandar com maestria.</div>
+          <div class="week-tagline">Foco: pronto para comandar.</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- VIEW AUTENTICAÇÃO (SEM CADASTRO PÚBLICO) -->
+  <!-- VIEW LOGIN -->
   <section id="view-auth" class="hidden">
     <div class="layout-two-col">
       <div class="card">
         <div class="card-header">
           <div>
             <h2 class="card-title">Entrar no Portal</h2>
-            <p class="card-subtitle">Use seu email e senha fornecidos pela Academia.</p>
+            <p class="card-subtitle">Use o email e a senha fornecidos pela Academia.</p>
           </div>
           <span class="tag">LOGIN</span>
         </div>
@@ -704,22 +600,22 @@
 
       <div class="card">
         <h3>Acesso controlado</h3>
-        <p><small>O cadastro de novos alunos é feito exclusivamente pelos instrutores na Área Administrativa.</small></p>
+        <p><small>O cadastro de novos alunos é feito exclusivamente pelos instrutores na área Admin.</small></p>
         <ul>
-          <li>Você deve receber email e senha oficiais da Academia.</li>
-          <li>Em caso de problema de acesso, procure um instrutor.</li>
+          <li>Você recebe seu acesso pronto.</li>
+          <li>Se tiver problema de login, fale com um instrutor.</li>
         </ul>
       </div>
     </div>
   </section>
 
-  <!-- VIEW PORTAL DO ALUNO + ADMIN -->
+  <!-- VIEW PORTAL DO ALUNO / ADMIN -->
   <section id="view-portal" class="hidden">
     <div class="card">
       <div class="card-header">
         <div>
-          <h2 class="card-title">Painel do Aluno</h2>
-          <p class="card-subtitle">Controle seu percurso: trabalhos, provas e desempenho.</p>
+          <h2 class="card-title">Painel</h2>
+          <p class="card-subtitle">Resumos, prova e gestão pela coordenação.</p>
         </div>
         <span class="chip secondary">
           👤 <span id="aluno-nome">Carregando...</span>
@@ -738,45 +634,20 @@
         <div class="layout-two-col">
           <div>
             <div class="card" style="margin-bottom:14px;">
-              <h3>Visão geral</h3>
-              <p>Use as abas para enviar seus trabalhos semanais, realizar provas e acompanhar suas notas.</p>
-              <div id="dashboard-stats" class="stats-row">
-                <div class="stat-card">
-                  <div class="stat-label">Trabalhos enviados</div>
-                  <div class="stat-value" id="stat-trabalhos">0</div>
-                </div>
-                <div class="stat-card">
-                  <div class="stat-label">Provas realizadas</div>
-                  <div class="stat-value" id="stat-provas">0</div>
-                </div>
-                <div class="stat-card">
-                  <div class="stat-label">Última atividade</div>
-                  <div class="stat-value" style="font-size:13px;" id="stat-ultima">—</div>
-                </div>
-              </div>
-              <ul style="margin-top:10px;">
-                <li><strong>Trabalhos:</strong> reflexões escritas após as aulas.</li>
-                <li><strong>Provas:</strong> questões objetivas + discursivas.</li>
-                <li><strong>Histórico:</strong> tudo vinculado ao seu usuário Supabase.</li>
-              </ul>
+              <h3>Resumo da sua situação</h3>
+              <p>Envie um resumo por semana e acompanhe aqui o que já foi entregue.</p>
+              <p><strong>Dica:</strong> use os resumos pra mostrar maturidade, aprendizado e visão de oficial.</p>
               <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
                 <a href="#" class="btn" id="btn-atalho-trabalho">Enviar trabalho da semana</a>
-                <a href="#" class="btn-ghost" id="btn-atalho-prova">Fazer prova teórica</a>
+                <a href="#" class="btn-ghost" id="btn-atalho-prova">Ir para a prova</a>
               </div>
             </div>
           </div>
 
           <div>
-            <div class="card" style="margin-bottom:12px;">
-              <h4>Últimos trabalhos enviados</h4>
-              <div id="lista-trabalhos-dashboard">
-                <small>Carregando...</small>
-              </div>
-            </div>
-
             <div class="card">
-              <h4>Provas realizadas</h4>
-              <div id="lista-provas-dashboard">
+              <h4>Meus trabalhos enviados</h4>
+              <div id="lista-trabalhos-dashboard">
                 <small>Carregando...</small>
               </div>
             </div>
@@ -784,12 +655,12 @@
         </div>
       </div>
 
-      <!-- TAB TRABALHOS -->
+      <!-- TRABALHOS -->
       <div id="tab-trabalhos" class="hidden">
         <div class="layout-two-col">
           <div>
-            <h3>Envio de Trabalhos</h3>
-            <p><small>Escreva um texto sobre o que aprendeu em cada semana (mínimo recomendado: 10 linhas).</small></p>
+            <h3>Envio de trabalho / resumo</h3>
+            <p><small>Um resumo por semana (o sistema só aceita 1 por semana).</small></p>
 
             <div class="card" style="margin-top:6px;">
               <label>Semana</label>
@@ -800,10 +671,10 @@
               </select>
 
               <label>Título do trabalho</label>
-              <input id="trabalho-titulo" placeholder="Ex: Relato de patrulhamento em zona quente">
+              <input id="trabalho-titulo" placeholder="Ex: Reflexão sobre abordagens em fundada suspeita">
 
-              <label>Texto do trabalho</label>
-              <textarea id="trabalho-texto" placeholder="Descreva situações vividas em RP, decisões tomadas, erros, acertos e aprendizados."></textarea>
+              <label>Texto do trabalho / resumo</label>
+              <textarea id="trabalho-texto" placeholder="Descreva o que aprendeu, o que faria diferente, erros, acertos, visão de comando, etc."></textarea>
 
               <button id="btn-enviar-trabalho">Enviar trabalho</button>
               <p style="margin-top:8px;"><small id="trabalho-msg"></small></p>
@@ -811,91 +682,76 @@
           </div>
 
           <div>
-            <h3>Meus trabalhos enviados</h3>
+            <h3>Meus trabalhos (com texto)</h3>
             <div class="card" style="margin-top:6px;">
-              <div id="lista-trabalhos"><small>Carregando...</small></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- TAB PROVA (GERADA VIA CONFIG) -->
-      <div id="tab-prova" class="hidden">
-        <div class="layout-two-col">
-          <div>
-            <h3 id="prova-titulo">Prova Teórica</h3>
-            <p><small>Prova oficial da Academia, baseada em procedimentos, comando e liderança.</small></p>
-
-            <div id="prova-bloqueada-msg" class="card hidden" style="margin-top:6px;">
-              <strong>Prova bloqueada pelo instrutor.</strong>
-              <p><small>Aguarde a liberação para realizar esta avaliação.</small></p>
-            </div>
-
-            <form id="form-prova" class="card" style="margin-top:6px;">
-              <div id="prova-questoes">
-                <!-- questões montadas via JS -->
-              </div>
-              <button type="submit" id="btn-enviar-prova">Enviar prova</button>
-              <p style="margin-top:8px;"><small id="prova-msg"></small></p>
-            </form>
-          </div>
-
-          <div>
-            <h3>Minhas provas</h3>
-            <div class="card" style="margin-top:6px;">
-              <div id="lista-provas"><small>Carregando...</small></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- TAB ADMIN -->
-      <div id="tab-admin" class="hidden">
-        <div class="layout-two-col">
-          <div>
-            <h3>Área Administrativa</h3>
-            <p><small>Somente instrutores: visão geral de todos os trabalhos, provas e controle de prova/cadastros.</small></p>
-
-            <div class="card" style="margin-top:6px;">
-              <h4>Trabalhos enviados (todos os alunos)</h4>
-              <div id="admin-lista-trabalhos">
+              <div id="lista-trabalhos">
                 <small>Carregando...</small>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
 
-            <div class="card" style="margin-top:10px;">
+      <!-- PROVA (APENAS LINK GOOGLE FORMS) -->
+      <div id="tab-prova" class="hidden">
+        <div class="layout-two-col">
+          <div>
+            <div class="card">
+              <h3>Prova teórica</h3>
+              <p>A prova teórica é feita em um formulário externo (Google Forms).</p>
+              <p><strong>Importante:</strong> siga as orientações da coordenação sobre horário e regras.</p>
+              <a
+                class="btn"
+                target="_blank"
+                href="SEU_LINK_DO_FORMS_AQUI">
+                Abrir prova no Google Forms
+              </a>
+              <p style="margin-top:10px;">
+                <small>Após a prova, a correção e resultado serão lançados pela coordenação.</small>
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <div class="card">
+              <h3>Orientações gerais</h3>
+              <ul>
+                <li>Não use metagaming para responder.</li>
+                <li>Responda como oficial da PMESP no RP, não como player.</li>
+                <li>Erros graves de postura podem reprovar, mesmo com boa nota técnica.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADMIN -->
+      <div id="tab-admin" class="hidden">
+        <div class="layout-two-col">
+          <div>
+            <h3>Admin - cadastros</h3>
+            <div class="card" style="margin-top:6px;">
               <h4>Cadastrar novo aluno</h4>
               <label>Nome (RP)</label>
               <input id="admin-cad-nome" type="text" placeholder="Ex: Sd. Silva">
               <label>Email</label>
-              <input id="admin-cad-email" type="email" placeholder="voce@exemplo.com">
+              <input id="admin-cad-email" type="email" placeholder="email@exemplo.com">
               <label>Senha</label>
               <input id="admin-cad-senha" type="password" placeholder="mínimo 6 caracteres">
               <button id="admin-btn-cadastrar">Cadastrar aluno</button>
               <p style="margin-top:8px;"><small id="admin-cad-msg"></small></p>
-              <p><small><strong>Aviso:</strong> isso usa a mesma chave anon do Supabase. Em teoria alguém avançado poderia burlar no console, mas na prática já é bem mais controlado do que cadastro aberto.</small></p>
             </div>
           </div>
 
           <div>
-            <h3>Provas realizadas (todos os alunos)</h3>
+            <h3>Admin - trabalhos para correção</h3>
             <div class="card" style="margin-top:6px;">
-              <div id="admin-lista-provas">
+              <div id="admin-lista-trabalhos">
                 <small>Carregando...</small>
               </div>
-            </div>
-
-            <div class="card" style="margin-top:10px;">
-              <h4>Configuração da Prova</h4>
-              <label>
-                <input type="checkbox" id="admin-prova-ativa" style="width:auto; margin-right:6px;">
-                Prova liberada para os alunos
-              </label>
-              <label>Modelo da prova (JSON) – apenas instrutores</label>
-              <textarea id="admin-prova-json" style="font-family: monospace; font-size:12px; min-height:220px;"></textarea>
-              <button id="admin-btn-salvar-prova" style="margin-top:4px;">Salvar configuração da prova</button>
-              <p style="margin-top:8px;"><small id="admin-prova-msg"></small></p>
-              <p><small>Dica: mantenha o formato, altere apenas os textos e a alternativa correta de cada questão.</small></p>
+              <p style="margin-top:8px;">
+                <small>Clique em cada trabalho para ver o texto completo.</small>
+              </p>
             </div>
           </div>
         </div>
@@ -908,86 +764,16 @@
 <!-- TOAST -->
 <div id="toast" class="toast hidden"></div>
 
-<!-- SCRIPT PRINCIPAL (SUPABASE + LÓGICA DO PORTAL) -->
+<!-- SCRIPT -->
 <script type="module">
   import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
-  // SEU PROJETO SUPABASE
   const SUPABASE_URL = "https://ilonwkgtdszmpcjwlezc.supabase.co";
   const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlsb253a2d0ZHN6bXBjandsZXpjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk5NzQxMDIsImV4cCI6MjA3NTU1MDEwMn0.Cc-BtnHlXaGVCY6T6iXe0QA1tsfc17aX8lswEICvtw0";
 
   const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  // CONFIG PADRÃO DA PROVA (EDITÁVEL PELO ADMIN)
-  const defaultProvaConfig = {
-    titulo: "Prova Teórica 1 - Procedimentos e Liderança",
-    questoes: [
-      {
-        id: "q1",
-        tipo: "objetiva",
-        enunciado: "Em uma abordagem de fundada suspeita, o primeiro passo correto é:",
-        alternativas: {
-          a: "Sacar a arma e apontar para o indivíduo.",
-          b: "Anunciar-se como policial, manter distância segura e dar comandos verbais claros.",
-          c: "Revistar imediatamente sem diálogo."
-        },
-        correta: "b"
-      },
-      {
-        id: "q2",
-        tipo: "objetiva",
-        enunciado: "De acordo com o uso progressivo da força, a sequência correta é:",
-        alternativas: {
-          a: "Força física → arma de fogo → diálogo.",
-          b: "Presença → verbalização → meios não letais → força letal (em último caso).",
-          c: "Arma de fogo sempre que houver qualquer risco."
-        },
-        correta: "b"
-      },
-      {
-        id: "q3",
-        tipo: "objetiva",
-        enunciado: "Durante perseguição veicular em zona urbana, o comandante da equipe deve:",
-        alternativas: {
-          a: "Falar o tempo todo no rádio, mesmo sem informações relevantes.",
-          b: "Manter comunicações objetivas, informando direção, velocidade, riscos e coordenando as demais viaturas.",
-          c: "Desligar o rádio para se concentrar apenas na direção."
-        },
-        correta: "b"
-      },
-      {
-        id: "q4",
-        tipo: "objetiva",
-        enunciado: "Sobre liderança de oficial no RP, assinale a alternativa mais adequada:",
-        alternativas: {
-          a: "Liderar pelo medo, punindo sempre em público.",
-          b: "Liderar pelo exemplo, cobrando disciplina e respeitando a hierarquia.",
-          c: "Ignorar erros dos subordinados para ser 'gente boa'."
-        },
-        correta: "b"
-      },
-      {
-        id: "q5",
-        tipo: "objetiva",
-        enunciado: "Em uma ocorrência com grande aglomeração (tumulto), o oficial deve priorizar:",
-        alternativas: {
-          a: "Entrar sozinho no meio da multidão.",
-          b: "Avaliar riscos, pedir apoio, estabelecer perímetro e dar ordens claras para dispersão.",
-          c: "Usar munição letal para dispersar mais rápido."
-        },
-        correta: "b"
-      },
-      {
-        id: "q6",
-        tipo: "discursiva",
-        enunciado: "Explique, em poucas linhas, como um oficial deve se portar em relação à hierarquia e disciplina dentro da corporação no RP."
-      }
-    ]
-  };
-
-  let provaConfig = { id: 1, ativa: false, config: defaultProvaConfig };
-
-  // ELEMENTOS DE TELA
+  // ELEMENTOS
   const viewPublic     = document.getElementById("view-public");
   const viewAuth       = document.getElementById("view-auth");
   const viewPortal     = document.getElementById("view-portal");
@@ -1015,12 +801,6 @@
   const btnAtalhoTrabalho = document.getElementById("btn-atalho-trabalho");
   const btnAtalhoProva     = document.getElementById("btn-atalho-prova");
 
-  // Dashboard stats
-  const statTrabalhos = document.getElementById("stat-trabalhos");
-  const statProvas    = document.getElementById("stat-provas");
-  const statUltima    = document.getElementById("stat-ultima");
-
-  // Trabalhos
   const trabSemanaSel  = document.getElementById("trabalho-semana");
   const trabTituloInp  = document.getElementById("trabalho-titulo");
   const trabTextoInp   = document.getElementById("trabalho-texto");
@@ -1029,30 +809,13 @@
   const listaTrabalhos = document.getElementById("lista-trabalhos");
   const listaTrabalhosDash = document.getElementById("lista-trabalhos-dashboard");
 
-  // Provas (aluno)
-  const provaTituloEl       = document.getElementById("prova-titulo");
-  const provaBloqueadaMsgEl = document.getElementById("prova-bloqueada-msg");
-  const formProva           = document.getElementById("form-prova");
-  const provaQuestoesEl     = document.getElementById("prova-questoes");
-  const provaMsg            = document.getElementById("prova-msg");
-  const listaProvas         = document.getElementById("lista-provas");
-  const listaProvasDash     = document.getElementById("lista-provas-dashboard");
-
-  // Admin
   const adminListaTrabalhos = document.getElementById("admin-lista-trabalhos");
-  const adminListaProvas    = document.getElementById("admin-lista-provas");
   const adminCadNome        = document.getElementById("admin-cad-nome");
   const adminCadEmail       = document.getElementById("admin-cad-email");
   const adminCadSenha       = document.getElementById("admin-cad-senha");
   const adminCadMsg         = document.getElementById("admin-cad-msg");
   const adminBtnCadastrar   = document.getElementById("admin-btn-cadastrar");
 
-  const adminProvaAtiva     = document.getElementById("admin-prova-ativa");
-  const adminProvaJson      = document.getElementById("admin-prova-json");
-  const adminProvaMsg       = document.getElementById("admin-prova-msg");
-  const adminBtnSalvarProva = document.getElementById("admin-btn-salvar-prova");
-
-  // Toast
   const toastEl = document.getElementById("toast");
   let toastTimeout = null;
 
@@ -1072,37 +835,7 @@
     }, 3500);
   }
 
-  // Navegação simples
-  navHomeLink.addEventListener("click", ev => {
-    ev.preventDefault();
-    mostrarViewPublicOuPortal();
-  });
-
-  btnIrAuth.addEventListener("click", ev => {
-    ev.preventDefault();
-    mostrarAuth();
-  });
-
-  navPortalLink.addEventListener("click", ev => {
-    ev.preventDefault();
-    mostrarPortal();
-    ativarTab("tab-dashboard");
-  });
-
-  navAdminLink.addEventListener("click", ev => {
-    ev.preventDefault();
-    mostrarPortal();
-    ativarTab("tab-admin");
-  });
-
-  navLogoutBtn.addEventListener("click", async () => {
-    await supabase.auth.signOut();
-    currentUser = null;
-    isAdmin = false;
-    showToast("Sessão encerrada.", "success");
-    mostrarPublic();
-  });
-
+  // Navegação
   function mostrarPublic() {
     viewPublic.classList.remove("hidden");
     viewAuth.classList.add("hidden");
@@ -1130,7 +863,8 @@
     navLogoutBtn.classList.remove("hidden");
   }
 
-  async function mostrarViewPublicOuPortal() {
+  navHomeLink.addEventListener("click", async (ev) => {
+    ev.preventDefault();
     const { data } = await supabase.auth.getUser();
     if (data.user) {
       currentUser = data.user;
@@ -1139,7 +873,32 @@
     } else {
       mostrarPublic();
     }
-  }
+  });
+
+  btnIrAuth.addEventListener("click", (ev) => {
+    ev.preventDefault();
+    mostrarAuth();
+  });
+
+  navPortalLink.addEventListener("click", (ev) => {
+    ev.preventDefault();
+    mostrarPortal();
+    ativarTab("tab-dashboard");
+  });
+
+  navAdminLink.addEventListener("click", (ev) => {
+    ev.preventDefault();
+    mostrarPortal();
+    ativarTab("tab-admin");
+  });
+
+  navLogoutBtn.addEventListener("click", async () => {
+    await supabase.auth.signOut();
+    currentUser = null;
+    isAdmin = false;
+    showToast("Sessão encerrada.", "success");
+    mostrarPublic();
+  });
 
   // Login
   btnLogin.addEventListener("click", async () => {
@@ -1175,16 +934,6 @@
     });
   });
 
-  btnAtalhoTrabalho.addEventListener("click", ev => {
-    ev.preventDefault();
-    ativarTab("tab-trabalhos");
-  });
-
-  btnAtalhoProva.addEventListener("click", ev => {
-    ev.preventDefault();
-    ativarTab("tab-prova");
-  });
-
   function ativarTab(tabId) {
     tabButtons.forEach(b => {
       const isThis = b.dataset.tab === tabId;
@@ -1196,7 +945,17 @@
     tabAdmin.classList.toggle("hidden", tabId !== "tab-admin");
   }
 
-  // Carregar dados do portal
+  btnAtalhoTrabalho.addEventListener("click", (ev) => {
+    ev.preventDefault();
+    ativarTab("tab-trabalhos");
+  });
+
+  btnAtalhoProva.addEventListener("click", (ev) => {
+    ev.preventDefault();
+    ativarTab("tab-prova");
+  });
+
+  // Carregar portal
   async function carregarPortal() {
     if (!currentUser) {
       const { data } = await supabase.auth.getUser();
@@ -1207,7 +966,7 @@
       }
     }
 
-    // Nome e flag admin
+    // Perfil
     const { data: perfil } = await supabase
       .from("profiles")
       .select("*")
@@ -1225,161 +984,55 @@
       tabBtnAdmin.classList.add("hidden");
     }
 
-    await carregarConfigProva();      // carrega configuração da prova do banco
-    montarProvaFormulario();          // monta a prova pra aluno/admin
-
-    const meusTrabs    = await carregarTrabalhos();
-    const minhasProvas = await carregarProvas();
-
-    // Atualizar stats
-    statTrabalhos.textContent = meusTrabs.length;
-    statProvas.textContent    = minhasProvas.length;
-
-    let ultimaData = null;
-    [...meusTrabs, ...minhasProvas].forEach(item => {
-      const d = new Date(item.created_at);
-      if (!ultimaData || d > ultimaData) ultimaData = d;
-    });
-    statUltima.textContent = ultimaData ? ultimaData.toLocaleString() : "—";
-
+    await carregarTrabalhosAluno();
     if (isAdmin) {
-      await carregarAdminDados();
-      preencherAdminProvaForm();
+      await carregarTrabalhosAdmin();
     }
-  }
-
-  // Carregar config da prova do Supabase
-  async function carregarConfigProva() {
-    try {
-      const { data, error } = await supabase
-        .from("prova_config")
-        .select("id, ativa, config")
-        .eq("id", 1)
-        .maybeSingle();
-
-      if (error) {
-        console.log("Erro ao carregar prova_config:", error);
-        provaConfig = { id: 1, ativa: false, config: defaultProvaConfig };
-        return;
-      }
-
-      if (!data) {
-        // se não existir ainda, usamos default (não grava ainda)
-        provaConfig = { id: 1, ativa: false, config: defaultProvaConfig };
-      } else {
-        provaConfig = {
-          id: data.id,
-          ativa: data.ativa ?? false,
-          config: data.config || defaultProvaConfig
-        };
-      }
-    } catch (e) {
-      console.log("Erro genérico ao carregar config prova:", e);
-      provaConfig = { id: 1, ativa: false, config: defaultProvaConfig };
-    }
-  }
-
-  // Montar o formulário de prova baseado na config
-  function montarProvaFormulario() {
-    const cfg = provaConfig?.config || defaultProvaConfig;
-
-    provaTituloEl.textContent = cfg.titulo || "Prova Teórica";
-
-    if (!provaConfig.ativa && !isAdmin) {
-      // aluno vê bloqueio, form escondido
-      provaBloqueadaMsgEl.classList.remove("hidden");
-      formProva.classList.add("hidden");
-      return;
-    }
-
-    provaBloqueadaMsgEl.classList.add("hidden");
-    formProva.classList.remove("hidden");
-
-    // montar questões
-    provaQuestoesEl.innerHTML = "";
-    cfg.questoes.forEach((q, idx) => {
-      const num = idx + 1;
-      if (q.tipo === "objetiva") {
-        const div = document.createElement("div");
-        div.className = "question";
-        div.innerHTML = `
-          <strong>${num}) ${q.enunciado}</strong>
-          <label><input type="radio" name="${q.id}" value="a"> ${q.alternativas?.a || ""}</label>
-          <label><input type="radio" name="${q.id}" value="b"> ${q.alternativas?.b || ""}</label>
-          <label><input type="radio" name="${q.id}" value="c"> ${q.alternativas?.c || ""}</label>
-        `;
-        provaQuestoesEl.appendChild(div);
-      } else if (q.tipo === "discursiva") {
-        const div = document.createElement("div");
-        div.className = "question";
-        div.innerHTML = `
-          <strong>${num}) ${q.enunciado}</strong>
-          <textarea name="${q.id}" placeholder="Responda aqui."></textarea>
-        `;
-        provaQuestoesEl.appendChild(div);
-      }
-    });
   }
 
   // Trabalhos (aluno)
-  async function carregarTrabalhos() {
-    if (!currentUser) return [];
+  async function carregarTrabalhosAluno() {
+    if (!currentUser) return;
     listaTrabalhos.innerHTML = "<small>Carregando...</small>";
     listaTrabalhosDash.innerHTML = "<small>Carregando...</small>";
 
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from("trabalhos")
       .select("*")
       .eq("user_id", currentUser.id)
       .order("created_at", { ascending: false });
 
-    if (!data || data.length === 0) {
-      listaTrabalhos.innerHTML = "<small>Nenhum trabalho enviado.</small>";
-      listaTrabalhosDash.innerHTML = "<small>Nenhum trabalho enviado.</small>";
-      return [];
+    if (error) {
+      listaTrabalhos.innerHTML = "<small>Erro ao carregar trabalhos.</small>";
+      listaTrabalhosDash.innerHTML = "<small>Erro ao carregar trabalhos.</small>";
+      return;
     }
 
-    const html = data.map(t => `
+    if (!data || data.length === 0) {
+      const vazio = "<small>Nenhum trabalho enviado ainda.</small>";
+      listaTrabalhos.innerHTML = vazio;
+      listaTrabalhosDash.innerHTML = vazio;
+      return;
+    }
+
+    // Lista completa (com texto)
+    listaTrabalhos.innerHTML = data.map(t => `
+      <div class="list-item">
+        <details>
+          <summary><strong>Semana ${t.semana}</strong> — ${t.titulo}</summary>
+          <small>Enviado em: ${new Date(t.created_at).toLocaleString()}</small>
+          <p style="margin-top:4px;">${(t.texto || "").replace(/\n/g, "<br>")}</p>
+        </details>
+      </div>
+    `).join("");
+
+    // Dashboard (só cabecalho)
+    listaTrabalhosDash.innerHTML = data.map(t => `
       <div class="list-item">
         <strong>Semana ${t.semana}</strong> — ${t.titulo}<br>
-        <small>Enviado em: ${new Date(t.created_at).toLocaleString()}</small>
+        <small>${new Date(t.created_at).toLocaleString()}</small>
       </div>
     `).join("");
-
-    listaTrabalhos.innerHTML = html;
-    listaTrabalhosDash.innerHTML = html;
-    return data;
-  }
-
-  // Provas (aluno)
-  async function carregarProvas() {
-    if (!currentUser) return [];
-    listaProvas.innerHTML = "<small>Carregando...</small>";
-    listaProvasDash.innerHTML = "<small>Carregando...</small>";
-
-    const { data } = await supabase
-      .from("provas")
-      .select("*")
-      .eq("user_id", currentUser.id)
-      .order("created_at", { ascending: false });
-
-    if (!data || data.length === 0) {
-      listaProvas.innerHTML = "<small>Nenhuma prova realizada.</small>";
-      listaProvasDash.innerHTML = "<small>Nenhuma prova realizada.</small>";
-      return [];
-    }
-
-    const html = data.map(p => `
-      <div class="list-item">
-        <strong>${p.prova_codigo}</strong><br>
-        <small>Data: ${new Date(p.created_at).toLocaleString()}</small><br>
-        <small>Nota objetiva: ${p.nota ?? "aguardando"}</small>
-      </div>
-    `).join("");
-
-    listaProvas.innerHTML = html;
-    listaProvasDash.innerHTML = html;
-    return data;
   }
 
   // Enviar trabalho (1 por semana)
@@ -1399,7 +1052,7 @@
       return;
     }
 
-    // trava: apenas 1 trabalho por semana por aluno
+    // 1 trabalho por semana
     const { data: existentes, error: erroCheck } = await supabase
       .from("trabalhos")
       .select("id")
@@ -1431,89 +1084,54 @@
     showToast("Trabalho enviado com sucesso!", "success");
     trabTituloInp.value = "";
     trabTextoInp.value = "";
-    const meusTrabs = await carregarTrabalhos();
-    statTrabalhos.textContent = meusTrabs.length;
+    await carregarTrabalhosAluno();
+    if (isAdmin) await carregarTrabalhosAdmin();
   });
 
-  // Enviar prova (1 vez só por modelo)
-  formProva.addEventListener("submit", async (ev) => {
-    ev.preventDefault();
-    if (!currentUser) {
-      provaMsg.textContent = "Faça login primeiro.";
-      showToast("Faça login para realizar a prova.", "error");
-      return;
-    }
+  // Admin - listar trabalhos de todos
+  async function carregarTrabalhosAdmin() {
+    adminListaTrabalhos.innerHTML = "<small>Carregando...</small>";
 
-    const provaCodigo = provaConfig.config.titulo || "Prova";
+    const { data: perfis } = await supabase
+      .from("profiles")
+      .select("id, nome");
 
-    // trava: só pode fazer essa prova uma vez
-    const { data: jaFez, error: erroCheck } = await supabase
-      .from("provas")
-      .select("id")
-      .eq("user_id", currentUser.id)
-      .eq("prova_codigo", provaCodigo)
-      .limit(1);
-
-    if (!erroCheck && jaFez && jaFez.length > 0) {
-      provaMsg.textContent = "Você já realizou essa prova. Aguarde correção.";
-      showToast("Você já realizou essa prova.", "error");
-      return;
-    }
-
-    provaMsg.textContent = "Enviando prova...";
-
-    const cfg = provaConfig.config || defaultProvaConfig;
-    const gabarito = {};
-    cfg.questoes.forEach(q => {
-      if (q.tipo === "objetiva" && q.correta) {
-        gabarito[q.id] = q.correta;
-      }
+    const nomesPorId = {};
+    (perfis || []).forEach(p => {
+      nomesPorId[p.id] = p.nome || p.id;
     });
 
-    const formData = new FormData(formProva);
-    const respostas = {};
-    for (let [key, value] of formData.entries()) {
-      respostas[key] = value;
-    }
+    const { data: trabs, error } = await supabase
+      .from("trabalhos")
+      .select("*")
+      .order("created_at", { ascending: false });
 
-    let acertos = 0;
-    let totalObj = 0;
-    for (const qid of Object.keys(gabarito)) {
-      totalObj++;
-      if (respostas[qid] === gabarito[qid]) acertos++;
-    }
-    const nota = totalObj > 0 ? (acertos / totalObj) * 10 : null;
-
-    const payload = {
-      user_id: currentUser.id,
-      prova_codigo: provaCodigo,
-      respostas,
-      nota
-    };
-
-    const { error } = await supabase.from("provas").insert(payload);
     if (error) {
-      provaMsg.textContent = "Erro ao salvar prova: " + error.message;
-      showToast("Erro ao salvar prova: " + error.message, "error");
+      adminListaTrabalhos.innerHTML = "<small>Erro ao carregar trabalhos.</small>";
       return;
     }
 
-    const msgDetalhe = nota !== null
-      ? `Acertos: ${acertos}/${totalObj} | Nota objetiva: ${nota.toFixed(1)} (discursiva será avaliada manualmente).`
-      : "Prova enviada! (sem questões objetivas configuradas).";
+    if (!trabs || trabs.length === 0) {
+      adminListaTrabalhos.innerHTML = "<small>Nenhum trabalho enviado ainda.</small>";
+      return;
+    }
 
-    provaMsg.textContent = "Prova enviada! " + msgDetalhe;
-    showToast("Prova enviada! " + msgDetalhe, "success");
+    adminListaTrabalhos.innerHTML = trabs.map(t => `
+      <div class="list-item">
+        <details>
+          <summary><strong>${nomesPorId[t.user_id] || t.user_id}</strong> — Semana ${t.semana} — ${t.titulo}</summary>
+          <small>Enviado em: ${new Date(t.created_at).toLocaleString()}</small>
+          <p style="margin-top:4px;">${(t.texto || "").replace(/\n/g, "<br>")}</p>
+        </details>
+      </div>
+    `).join("");
+  }
 
-    const minhasProvas = await carregarProvas();
-    statProvas.textContent = minhasProvas.length;
-  });
-
-  // ADMIN: cadastrar novo aluno
+  // Admin - cadastrar aluno
   adminBtnCadastrar.addEventListener("click", async () => {
     if (!isAdmin) {
       adminCadMsg.textContent = "Somente admin pode cadastrar.";
-      showToast("Acesso negado ao cadastro.", "error");
+      showToast("Somente admin pode cadastrar alunos.", "error");
       return;
     }
 
@@ -1523,7 +1141,7 @@
 
     if (!nome || !email || !senha) {
       adminCadMsg.textContent = "Preencha todos os campos.";
-      showToast("Preencha todos os campos para cadastrar.", "error");
+      showToast("Preencha todos os campos.", "error");
       return;
     }
 
@@ -1554,127 +1172,16 @@
     adminCadSenha.value = "";
   });
 
-  // ADMIN: preencher form de config da prova
-  function preencherAdminProvaForm() {
-    if (!isAdmin) return;
-    adminProvaAtiva.checked = !!provaConfig.ativa;
-    adminProvaJson.value = JSON.stringify(provaConfig.config || defaultProvaConfig, null, 2);
-  }
-
-  // ADMIN: salvar config da prova
-  adminBtnSalvarProva.addEventListener("click", async () => {
-    if (!isAdmin) {
-      adminProvaMsg.textContent = "Somente admin pode alterar a prova.";
-      showToast("Somente admin pode alterar a prova.", "error");
-      return;
-    }
-
-    let novoConfig;
-    try {
-      novoConfig = JSON.parse(adminProvaJson.value);
-    } catch (e) {
-      adminProvaMsg.textContent = "JSON inválido. Verifique a sintaxe.";
-      showToast("JSON inválido. Verifique se não faltou vírgula, aspas, etc.", "error");
-      return;
-    }
-
-    const ativa = adminProvaAtiva.checked;
-
-    const { data, error } = await supabase
-      .from("prova_config")
-      .upsert({
-        id: 1,
-        ativa,
-        config: novoConfig
-      }, { onConflict: "id" })
-      .select()
-      .maybeSingle();
-
-    if (error) {
-      adminProvaMsg.textContent = "Erro ao salvar config: " + error.message;
-      showToast("Erro ao salvar config da prova: " + error.message, "error");
-      return;
-    }
-
-    provaConfig = {
-      id: data.id,
-      ativa: data.ativa,
-      config: data.config
-    };
-
-    adminProvaMsg.textContent = "Configuração salva.";
-    showToast("Configuração da prova salva com sucesso.", "success");
-    montarProvaFormulario();
-  });
-
-  // Carregar dados para o admin (todos os alunos)
-  async function carregarAdminDados() {
-    if (!isAdmin) return;
-
-    adminListaTrabalhos.innerHTML = "<small>Carregando...</small>";
-    adminListaProvas.innerHTML = "<small>Carregando...</small>";
-
-    // Mapa de nomes por id
-    const { data: perfis } = await supabase
-      .from("profiles")
-      .select("id, nome");
-
-    const nomesPorId = {};
-    (perfis || []).forEach(p => {
-      nomesPorId[p.id] = p.nome || p.id;
-    });
-
-    // Todos os trabalhos
-    const { data: trabs } = await supabase
-      .from("trabalhos")
-      .select("*")
-      .order("created_at", { ascending: false });
-
-    if (!trabs || trabs.length === 0) {
-      adminListaTrabalhos.innerHTML = "<small>Nenhum trabalho enviado.</small>";
-    } else {
-      adminListaTrabalhos.innerHTML = trabs.map(t => `
-        <div class="list-item">
-          <details>
-            <summary><strong>${nomesPorId[t.user_id] || t.user_id}</strong> — Semana ${t.semana} — ${t.titulo}</summary>
-            <small>${new Date(t.created_at).toLocaleString()}</small>
-            <p style="margin-top:4px;">${(t.texto || "").replace(/\n/g, "<br>")}</p>
-          </details>
-        </div>
-      `).join("");
-    }
-
-    // Todas as provas
-    const { data: provas } = await supabase
-      .from("provas")
-      .select("*")
-      .order("created_at", { ascending: false });
-
-    if (!provas || provas.length === 0) {
-      adminListaProvas.innerHTML = "<small>Nenhuma prova realizada.</small>";
-    } else {
-      adminListaProvas.innerHTML = provas.map(p => {
-        const respostas = p.respostas || {};
-        const obj = [];
-        for (const [k, v] of Object.entries(respostas)) {
-          obj.push(`<li><strong>${k}:</strong> ${String(v).replace(/\n/g, "<br>")}</li>`);
-        }
-        return `
-          <div class="list-item">
-            <details>
-              <summary><strong>${nomesPorId[p.user_id] || p.user_id}</strong> — ${p.prova_codigo} (nota: ${p.nota ?? "aguardando"})</summary>
-              <small>Data: ${new Date(p.created_at).toLocaleString()}</small>
-              <ul style="margin-top:4px; padding-left:18px;">${obj.join("")}</ul>
-            </details>
-          </div>
-        `;
-      }).join("");
-    }
-  }
-
-  // Ao carregar a página, decidir o que mostrar
+  // Ao carregar a página
   (async () => {
-    await mostrarViewPublicOuPortal();
+    const { data } = await supabase.auth.getUser();
+    if (data.user) {
+      currentUser = data.user;
+      await carregarPortal();
+      mostrarPortal();
+    } else {
+      mostrarPublic();
+    }
   })();
 </script>
 </body>
