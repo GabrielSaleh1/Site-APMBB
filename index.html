@@ -538,6 +538,7 @@
   <nav>
     <a href="#" id="nav-home-link">Início</a>
     <a href="#" id="nav-portal-link" class="hidden">Portal do Aluno</a>
+    <a href="#" id="nav-admin-link" class="hidden">Admin</a>
     <button id="nav-logout-btn" class="danger hidden">Sair</button>
   </nav>
 </header>
@@ -671,7 +672,7 @@
             <h2 class="card-title">Cadastrar novo aluno</h2>
             <p class="card-subtitle">Crie seu acesso individual ao portal da Academia.</p>
           </div>
-          <span class="tag green">Cadastro</span>
+        <span class="tag green">Cadastro</span>
         </div>
 
         <label>Nome (RP)</label>
@@ -686,7 +687,7 @@
     </div>
   </section>
 
-  <!-- VIEW PORTAL DO ALUNO -->
+  <!-- VIEW PORTAL DO ALUNO + ADMIN -->
   <section id="view-portal" class="hidden">
     <div class="card">
       <div class="card-header">
@@ -703,6 +704,7 @@
         <button class="tab-btn active" data-tab="tab-dashboard">Dashboard</button>
         <button class="tab-btn" data-tab="tab-trabalhos">Trabalhos</button>
         <button class="tab-btn" data-tab="tab-prova">Prova</button>
+        <button class="tab-btn hidden" data-tab="tab-admin" id="tab-btn-admin">Admin</button>
       </div>
 
       <!-- DASHBOARD -->
@@ -839,6 +841,32 @@
         </div>
       </div>
 
+      <!-- TAB ADMIN -->
+      <div id="tab-admin" class="hidden">
+        <div class="layout-two-col">
+          <div>
+            <h3>Área Administrativa</h3>
+            <p><small>Somente instrutores: visão geral de todos os trabalhos e provas enviados pelos alunos.</small></p>
+
+            <div class="card" style="margin-top:6px;">
+              <h4>Trabalhos enviados (todos os alunos)</h4>
+              <div id="admin-lista-trabalhos">
+                <small>Carregando...</small>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3>Provas realizadas (todos os alunos)</h3>
+            <div class="card" style="margin-top:6px;">
+              <div id="admin-lista-provas">
+                <small>Carregando...</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 </main>
@@ -860,6 +888,7 @@
 
   const navHomeLink    = document.getElementById("nav-home-link");
   const navPortalLink  = document.getElementById("nav-portal-link");
+  const navAdminLink   = document.getElementById("nav-admin-link");
   const navLogoutBtn   = document.getElementById("nav-logout-btn");
   const btnIrAuth      = document.getElementById("btn-ir-auth");
   const btnVerEstrutura = document.getElementById("btn-ver-estrutura");
@@ -882,6 +911,8 @@
   const tabDashboard   = document.getElementById("tab-dashboard");
   const tabTrabalhos   = document.getElementById("tab-trabalhos");
   const tabProva       = document.getElementById("tab-prova");
+  const tabAdmin       = document.getElementById("tab-admin");
+  const tabBtnAdmin    = document.getElementById("tab-btn-admin");
 
   const btnAtalhoTrabalho = document.getElementById("btn-atalho-trabalho");
   const btnAtalhoProva     = document.getElementById("btn-atalho-prova");
@@ -901,7 +932,12 @@
   const listaProvas        = document.getElementById("lista-provas");
   const listaProvasDash    = document.getElementById("lista-provas-dashboard");
 
+  // Admin
+  const adminListaTrabalhos = document.getElementById("admin-lista-trabalhos");
+  const adminListaProvas    = document.getElementById("admin-lista-provas");
+
   let currentUser = null;
+  let isAdmin = false;
 
   // Navegação simples
   navHomeLink.addEventListener("click", ev => {
@@ -917,11 +953,19 @@
   navPortalLink.addEventListener("click", ev => {
     ev.preventDefault();
     mostrarPortal();
+    ativarTab("tab-dashboard");
+  });
+
+  navAdminLink.addEventListener("click", ev => {
+    ev.preventDefault();
+    mostrarPortal();
+    ativarTab("tab-admin");
   });
 
   navLogoutBtn.addEventListener("click", async () => {
     await supabase.auth.signOut();
     currentUser = null;
+    isAdmin = false;
     mostrarPublic();
   });
 
@@ -939,6 +983,7 @@
     viewAuth.classList.add("hidden");
     viewPortal.classList.add("hidden");
     navPortalLink.classList.add("hidden");
+    navAdminLink.classList.add("hidden");
     navLogoutBtn.classList.add("hidden");
   }
 
@@ -947,6 +992,7 @@
     viewAuth.classList.remove("hidden");
     viewPortal.classList.add("hidden");
     navPortalLink.classList.add("hidden");
+    navAdminLink.classList.add("hidden");
     navLogoutBtn.classList.add("hidden");
   }
 
@@ -955,6 +1001,7 @@
     viewAuth.classList.add("hidden");
     viewPortal.classList.remove("hidden");
     navPortalLink.classList.remove("hidden");
+    if (isAdmin) navAdminLink.classList.remove("hidden");
     navLogoutBtn.classList.remove("hidden");
   }
 
@@ -1010,12 +1057,14 @@
   // Tabs
   tabButtons.forEach(btn => {
     btn.addEventListener("click", () => {
+      if (btn.classList.contains("hidden")) return;
       tabButtons.forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
       const tab = btn.dataset.tab;
       tabDashboard.classList.add("hidden");
       tabTrabalhos.classList.add("hidden");
       tabProva.classList.add("hidden");
+      tabAdmin.classList.add("hidden");
       document.getElementById(tab).classList.remove("hidden");
     });
   });
@@ -1032,11 +1081,13 @@
 
   function ativarTab(tabId) {
     tabButtons.forEach(b => {
-      b.classList.toggle("active", b.dataset.tab === tabId);
+      const isThis = b.dataset.tab === tabId;
+      b.classList.toggle("active", isThis);
     });
     tabDashboard.classList.toggle("hidden", tabId !== "tab-dashboard");
     tabTrabalhos.classList.toggle("hidden", tabId !== "tab-trabalhos");
     tabProva.classList.toggle("hidden", tabId !== "tab-prova");
+    tabAdmin.classList.toggle("hidden", tabId !== "tab-admin");
   }
 
   // Carregar dados do portal
@@ -1050,13 +1101,24 @@
       }
     }
 
-    // Nome do aluno
+    // Nome do aluno / admin
     const { data: perfil } = await supabase
       .from("profiles")
       .select("*")
       .eq("id", currentUser.id)
       .maybeSingle();
+
     alunoNomeSpan.textContent = perfil?.nome || currentUser.email;
+    isAdmin = !!perfil?.is_admin;
+
+    if (isAdmin) {
+      navAdminLink.classList.remove("hidden");
+      tabBtnAdmin.classList.remove("hidden");
+      await carregarAdminDados();
+    } else {
+      navAdminLink.classList.add("hidden");
+      tabBtnAdmin.classList.add("hidden");
+    }
 
     await carregarTrabalhos();
     await carregarProvas();
@@ -1151,6 +1213,7 @@
     trabTituloInp.value = "";
     trabTextoInp.value = "";
     await carregarTrabalhos();
+    if (isAdmin) await carregarAdminDados();
   });
 
   // Enviar prova
@@ -1200,7 +1263,58 @@
 
     provaMsg.textContent = `Prova enviada! Nota objetiva: ${nota.toFixed(1)} (discursiva será avaliada manualmente).`;
     await carregarProvas();
+    if (isAdmin) await carregarAdminDados();
   });
+
+  // Carregar dados para o admin (todos os alunos)
+  async function carregarAdminDados() {
+    if (!isAdmin) return;
+
+    // Mapa de nomes por id
+    const { data: perfis } = await supabase
+      .from("profiles")
+      .select("id, nome");
+
+    const nomesPorId = {};
+    (perfis || []).forEach(p => {
+      nomesPorId[p.id] = p.nome || p.id;
+    });
+
+    // Todos os trabalhos
+    const { data: trabs } = await supabase
+      .from("trabalhos")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (!trabs || trabs.length === 0) {
+      adminListaTrabalhos.innerHTML = "<small>Nenhum trabalho enviado.</small>";
+    } else {
+      adminListaTrabalhos.innerHTML = trabs.map(t => `
+        <div class="list-item">
+          <strong>${nomesPorId[t.user_id] || t.user_id}</strong> — Semana ${t.semana} — ${t.titulo}<br>
+          <small>${new Date(t.created_at).toLocaleString()}</small>
+        </div>
+      `).join("");
+    }
+
+    // Todas as provas
+    const { data: provas } = await supabase
+      .from("provas")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (!provas || provas.length === 0) {
+      adminListaProvas.innerHTML = "<small>Nenhuma prova realizada.</small>";
+    } else {
+      adminListaProvas.innerHTML = provas.map(p => `
+        <div class="list-item">
+          <strong>${nomesPorId[p.user_id] || p.user_id}</strong> — ${p.prova_codigo}<br>
+          <small>Data: ${new Date(p.created_at).toLocaleString()}</small><br>
+          <small>Nota objetiva: ${p.nota ?? "aguardando"}</small>
+        </div>
+      `).join("");
+    }
+  }
 
   // Ao carregar a página, decidir o que mostrar
   (async () => {
